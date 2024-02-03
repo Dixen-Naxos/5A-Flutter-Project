@@ -5,8 +5,16 @@ import '../api.dart';
 
 class AuthApi extends AuthDataSource {
   @override
-  Future<Token> login() async {
-    // TODO: implement me
+  Future<Token> login(String email, String password) async {
+    try {
+      final response = await Api.dio.post('/auth/login', data: {
+        "email": email,
+        "password": password,
+      });
+      return Token(token: response.data["authToken"]);
+    } catch (e) {
+      rethrow;
+    }
     throw UnimplementedError();
   }
 

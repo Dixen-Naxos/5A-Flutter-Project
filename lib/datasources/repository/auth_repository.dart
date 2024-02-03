@@ -9,8 +9,8 @@ class AuthRepository {
     required this.authDataSource,
   });
 
-  Future<Token> login() async {
-    return authDataSource.login();
+  Future<Token> login(String email, String password) async {
+    return authDataSource.login(email, password);
   }
 
   Future<User> me() async {
