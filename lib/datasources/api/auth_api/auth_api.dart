@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-
 import '../../../models/token.dart';
 import '../../../models/user.dart';
 import '../../datasources/auth_datasource.dart';
