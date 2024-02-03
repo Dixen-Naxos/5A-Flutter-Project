@@ -7,6 +7,7 @@ class CommentApi extends CommentDataSource {
   @override
   Future<void> createComment(String content) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.patch('/comment', data: {
         "content": content,
       });
@@ -19,6 +20,7 @@ class CommentApi extends CommentDataSource {
   @override
   Future<void> deleteComment(int id) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.delete('/comment/$id');
       return;
     } catch (e) {
@@ -29,6 +31,7 @@ class CommentApi extends CommentDataSource {
   @override
   Future<Comment> patchComment(int id, String content) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.patch('/comment/$id', data: {
         "content": content,
       });

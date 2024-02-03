@@ -6,6 +6,7 @@ class PostApi extends PostDataSource {
   @override
   Future<void> createPost(String content, String? image) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.post('/post', data: {
         "content": content,
         "image": image,
@@ -19,6 +20,7 @@ class PostApi extends PostDataSource {
   @override
   Future<void> deletePost(int id) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.delete('/post/$id');
       return;
     } catch (e) {
@@ -51,6 +53,7 @@ class PostApi extends PostDataSource {
   @override
   Future<Post> patchPost(int id, String? content, String? image) async {
     try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.patch('/post/$id', data: {
         "content": content,
         "image": image,
