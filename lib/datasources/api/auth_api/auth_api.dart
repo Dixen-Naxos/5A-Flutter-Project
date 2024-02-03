@@ -24,7 +24,7 @@ class AuthApi extends AuthDataSource {
       final response = await Api.dio.get('/auth/me');
       return User(
         id: response.data["id"],
-        createdAt: response.data["createdAt"],
+        createdAt: response.data["created_at"],
         name: response.data["name"],
       );
     } catch (e) {
