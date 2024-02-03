@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../models/token.dart';
 import '../../../models/user.dart';
 import '../../datasources/auth_datasource.dart';
@@ -15,13 +17,21 @@ class AuthApi extends AuthDataSource {
     } catch (e) {
       rethrow;
     }
-    throw UnimplementedError();
   }
 
   @override
   Future<User> me() async {
-    // TODO: implement me
-    throw UnimplementedError();
+    try {
+      Api.dio.options.headers["Authorization"] = "Bearer token";
+      final response = await Api.dio.get('/auth/me');
+      return User(
+        id: response.data["id"],
+        createdAt: response.data["createdAt"],
+        name: response.data["name"],
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
