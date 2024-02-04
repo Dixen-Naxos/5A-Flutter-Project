@@ -1,5 +1,5 @@
 class User {
-  final String id;
+  final int id;
   final String createdAt;
   final String name;
   final String? email;
@@ -10,4 +10,13 @@ class User {
     required this.name,
     this.email,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json["id"],
+      createdAt: json["created_at"],
+      name: json["name"],
+      email: json["email"],
+    );
+  }
 }

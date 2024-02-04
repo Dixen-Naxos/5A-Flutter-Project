@@ -22,4 +22,21 @@ class Post {
     this.commentCounts,
     this.image,
   });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json["id"],
+      createdAt: json["created_at"],
+      content: json["content"],
+      author: json["author"] ? User.fromJson(json["author"]) : null,
+      userId: json["user_id"],
+      comments: json["comments"] ? Comment.listFromJson(json["comments"]) : null,
+      commentCounts: json["comment_counts"],
+      image: json["image"] ? Image.fromJson(json["image"]) : null,
+    );
+  }
+
+  static List<Post> listFromJson(List<Map<String, dynamic>> list) {
+    return list.map((item) => Post.fromJson(item)).toList();
+  }
 }

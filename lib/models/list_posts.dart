@@ -20,4 +20,17 @@ class ListPosts {
     required this.pageTotal,
     required this.items,
   });
+
+  factory ListPosts.fromJson(Map<String, dynamic> json) {
+    return ListPosts(
+      itemsReceived: json["itemsReceived"],
+      curPage: json["curPage"],
+      nextPage: json["nextPage"],
+      prevPage: json["prevPage"],
+      offset: json["offset"],
+      itemsTotal: json["itemsTotal"],
+      pageTotal: json["pageTotal"],
+      items: Post.listFromJson(json["items"]),
+    );
+  }
 }
