@@ -1,3 +1,4 @@
+import '../../models/list_posts.dart';
 import '../../models/post.dart';
 import '../datasources/post_datasource.dart';
 
@@ -20,7 +21,7 @@ class PostRepository {
     return postDataSource.patchPost(id, content, image);
   }
 
-  Future<List<Post>> getPosts(int page, int perPage) async {
+  Future<ListPosts> getPosts(int page, int perPage) async {
     return postDataSource.getPosts(page, perPage);
   }
 

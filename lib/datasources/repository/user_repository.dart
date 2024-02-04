@@ -1,6 +1,7 @@
 import 'package:cinqa_flutter_project/datasources/datasources/user_datasource.dart';
 
 import '../../models/user.dart';
+import '../../models/user_posts.dart';
 
 class UserRepository {
   final UserDataSource userDataSource;
@@ -9,7 +10,7 @@ class UserRepository {
     required this.userDataSource,
   });
 
-  Future<User> getUserPosts(int id, int page, int perPage) async {
+  Future<UserPosts> getUserPosts(int id, int page, int perPage) async {
     return userDataSource.getUserPosts(id, page, perPage);
   }
 

@@ -22,11 +22,7 @@ class AuthApi extends AuthDataSource {
     try {
       Api.dio.options.headers["Authorization"] = "Bearer token";
       final response = await Api.dio.get('/auth/me');
-      return User(
-        id: response.data["id"],
-        createdAt: response.data["created_at"],
-        name: response.data["name"],
-      );
+      return User.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;
     }
