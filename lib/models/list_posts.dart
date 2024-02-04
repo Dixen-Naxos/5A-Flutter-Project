@@ -30,7 +30,7 @@ class ListPosts {
       offset: json["offset"],
       itemsTotal: json["itemsTotal"],
       pageTotal: json["pageTotal"],
-      items: Post.listFromJson(json["items"]),
+      items: Post.listFromJson(json["items"] as List<Map<String, dynamic>>),
     );
   }
 }
