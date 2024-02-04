@@ -6,16 +6,20 @@ class Post {
   final int id;
   final String createdAt;
   final String content;
-  final User author;
-  final List<Comment> comments;
+  final User? author;
+  final int? userId;
+  final List<Comment>? comments;
+  final int? commentCounts;
   final Image? image;
 
   Post({
     required this.id,
     required this.createdAt,
     required this.content,
-    required this.author,
-    required this.comments,
+    this.author,
+    this.userId,
+    this.comments,
+    this.commentCounts,
     this.image,
   });
 }
