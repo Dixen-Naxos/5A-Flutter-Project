@@ -1,3 +1,5 @@
+import 'package:cinqa_flutter_project/widgets/input_widgets/input_field.dart';
+import 'package:cinqa_flutter_project/widgets/input_widgets/password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,9 +22,7 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-
-  bool isPasswordHidden = true;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,25 +82,9 @@ class _SignupPageState extends State<SignupPage> {
                           left: 20,
                           right: 20,
                         ),
-                        child: TextField(
+                        child: InputField(
+                          hintText: "Email",
                           controller: emailController,
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
                         ),
                       ),
                       Padding(
@@ -108,72 +92,19 @@ class _SignupPageState extends State<SignupPage> {
                           left: 20,
                           right: 20,
                         ),
-                        child: Stack(
-                          children: [
-                            TextField(
-                              controller: passwordController,
-                              obscureText: isPasswordHidden,
-                              enableSuggestions: false,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                hintText: "Mot de passe",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Center(
-                                    child: IconButton(
-                                      onPressed: showPassword,
-                                      icon: const Icon(Icons.remove_red_eye),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                        child: PasswordField(
+                          controller: passwordController,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 50),
-                        child: TextField(
+                          left: 20,
+                          right: 20,
+                          bottom: 50,
+                        ),
+                        child: InputField(
+                          hintText: "Nom",
                           controller: nameController,
-                          decoration: InputDecoration(
-                            hintText: "Nom",
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                          ),
                         ),
                       ),
                     ],
@@ -207,12 +138,6 @@ class _SignupPageState extends State<SignupPage> {
 
   void _onArrowBackClic(BuildContext context) {
     Navigator.pop(context);
-  }
-
-  void showPassword() {
-    setState(() {
-      isPasswordHidden = !isPasswordHidden;
-    });
   }
 
   void _onCreateAccountClic(BuildContext context) {

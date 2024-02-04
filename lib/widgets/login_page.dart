@@ -1,3 +1,5 @@
+import 'package:cinqa_flutter_project/widgets/input_widgets/input_field.dart';
+import 'package:cinqa_flutter_project/widgets/input_widgets/password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +21,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  bool isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -77,78 +77,21 @@ class _LoginPageState extends State<LoginPage> {
                     runSpacing: 20,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                        ),
-                        child: TextField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
                           ),
-                        ),
-                      ),
+                          child: InputField(
+                            hintText: "Email",
+                            controller: emailController,
+                          )),
                       Padding(
                         padding: const EdgeInsets.only(
                           left: 20,
                           right: 20,
                         ),
-                        child: Stack(
-                          children: [
-                            TextField(
-                              controller: passwordController,
-                              obscureText: isPasswordHidden,
-                              enableSuggestions: false,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                hintText: "Mot de passe",
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.grey,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Colors.black,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Center(
-                                    child: IconButton(
-                                      onPressed: showPassword,
-                                      icon: const Icon(Icons.remove_red_eye),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                        child: PasswordField(
+                          controller: passwordController,
                         ),
                       ),
                     ],
@@ -190,12 +133,6 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       ),
     );
-  }
-
-  void showPassword() {
-    setState(() {
-      isPasswordHidden = !isPasswordHidden;
-    });
   }
 
   void _onArrowBackClic(BuildContext context) {
