@@ -2,8 +2,6 @@ import 'package:cinqa_flutter_project/datasources/datasources/user_datasource.da
 import 'package:cinqa_flutter_project/models/user.dart';
 import 'package:cinqa_flutter_project/models/user_posts.dart';
 
-import '../../../models/image.dart';
-import '../../../models/post.dart';
 import '../api.dart';
 
 class UserApi extends UserDataSource {
