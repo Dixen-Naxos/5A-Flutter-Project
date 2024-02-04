@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/auth_bloc/auth_bloc.dart';
+import 'button_widgets/button_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -99,19 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, top: 30),
-                    child: ElevatedButton(
-                      onPressed: () => _onLoginClic(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text("Se connecter"),
-                      ),
+                    child: ButtonWidget(
+                      onTap: () => _onLogInClick(context),
+                      text: "Se connecter",
                     ),
                   ),
                 ],
@@ -124,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLoginClic(context) {
+  void _onLogInClick(context) {
     final authBloc = BlocProvider.of<AuthBloc>(context);
 
     authBloc.add(

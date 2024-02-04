@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/auth_bloc/auth_bloc.dart';
+import 'button_widgets/button_widget.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -111,19 +112,9 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: ElevatedButton(
-                      onPressed: () => _onCreateAccountClic(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text("Créer un compte"),
-                      ),
+                    child: ButtonWidget(
+                      onTap: () => _onCreateAccountClic(context),
+                      text: "Créer un compte",
                     ),
                   ),
                 ],

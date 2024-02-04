@@ -1,3 +1,4 @@
+import 'package:cinqa_flutter_project/widgets/button_widgets/button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/login_page.dart';
 import 'package:cinqa_flutter_project/widgets/signup_page.dart';
 import 'package:flutter/material.dart';
@@ -49,19 +50,9 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                        ),
-                      ),
-                      onPressed: () => _onLogInClic(context),
-                      child: const Center(
-                        child: Text("Se connecter"),
-                      ),
+                    ButtonWidget(
+                      onTap: () => _onLogInClick(context),
+                      text: "Se connecter",
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -89,20 +80,10 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () => _onSignUpClic(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text("Créer un compte"),
-                      ),
-                    ),
+                    ButtonWidget(
+                      onTap: () => _onSignUpClick(context),
+                      text: "Créer un compte",
+                    )
                   ],
                 ),
               ),
@@ -113,11 +94,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onSignUpClic(BuildContext context) {
+  void _onSignUpClick(BuildContext context) {
     SignupPage.navigateTo(context);
   }
 
-  void _onLogInClic(BuildContext context) {
+  void _onLogInClick(BuildContext context) {
     LoginPage.navigateTo(context);
   }
 /*@override
