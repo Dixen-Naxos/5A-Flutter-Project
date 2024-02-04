@@ -1,6 +1,6 @@
 import 'package:cinqa_flutter_project/models/post.dart';
 
-class ListPosts {
+class UserPosts {
   final int itemsReceived;
   final int curPage;
   final int nextPage;
@@ -10,7 +10,7 @@ class ListPosts {
   final int pageTotal;
   final List<Post> items;
 
-  ListPosts({
+  UserPosts({
     required this.itemsReceived,
     required this.curPage,
     required this.nextPage,
