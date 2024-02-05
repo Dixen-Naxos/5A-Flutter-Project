@@ -1,6 +1,28 @@
 part of 'post_bloc.dart';
 
-@immutable
-abstract class PostState {}
+enum PostStatus {
+  initial,
+  loading,
+  success,
+  error,
+}
 
-class PostInitial extends PostState {}
+class PostState {
+  final ListPosts? posts;
+  final PostStatus status;
+
+  const PostState({
+    this.posts,
+    this.status = PostStatus.initial,
+  });
+
+  PostState copyWith({
+    ListPosts? posts,
+    PostStatus? status,
+  }) {
+    return PostState(
+      posts: posts ?? this.posts,
+      status: status ?? this.status,
+    );
+  }
+}

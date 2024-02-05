@@ -1,5 +1,6 @@
 import '../../models/list_posts.dart';
 import '../../models/post.dart';
+import '../../models/user_posts.dart';
 import '../datasources/post_datasource.dart';
 
 class PostRepository {
@@ -29,4 +30,7 @@ class PostRepository {
     return postDataSource.createPost(content, image);
   }
 
+  Future<ListPosts> getUserPosts(int id, int page, int perPage) async {
+    return postDataSource.getUserPosts(id, page, perPage);
+  }
 }

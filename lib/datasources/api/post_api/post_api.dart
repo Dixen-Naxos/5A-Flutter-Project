@@ -1,6 +1,7 @@
 import 'package:cinqa_flutter_project/models/list_posts.dart';
 
 import '../../../models/post.dart';
+import '../../../models/user_posts.dart';
 import '../../datasources/post_datasource.dart';
 import '../api.dart';
 
@@ -59,6 +60,19 @@ class PostApi extends PostDataSource {
         "image": image,
       });
       return Post.fromJson(response.data as Map<String, dynamic>);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ListPosts> getUserPosts(int id, int page, int perPage) async {
+    try {
+      final response = await Api.dio.get('/user/$id/posts', data: {
+        "page": page,
+        "perPage": perPage
+      });
+      return ListPosts.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;
     }

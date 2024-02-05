@@ -3,8 +3,8 @@ import 'package:cinqa_flutter_project/models/post.dart';
 class ListPosts {
   final int itemsReceived;
   final int curPage;
-  final int nextPage;
-  final int prevPage;
+  final int? nextPage;
+  final int? prevPage;
   final int offset;
   final int itemsTotal;
   final int pageTotal;
@@ -30,7 +30,7 @@ class ListPosts {
       offset: json["offset"],
       itemsTotal: json["itemsTotal"],
       pageTotal: json["pageTotal"],
-      items: Post.listFromJson(json["items"] as List<Map<String, dynamic>>),
+      items: Post.listFromJson(json["items"] as List<dynamic>),
     );
   }
 }
