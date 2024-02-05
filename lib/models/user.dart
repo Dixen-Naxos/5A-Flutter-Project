@@ -1,6 +1,6 @@
 class User {
   final int id;
-  final String createdAt;
+  final int createdAt;
   final String name;
   final String? email;
 

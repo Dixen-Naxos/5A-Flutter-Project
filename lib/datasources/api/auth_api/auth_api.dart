@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../models/token.dart';
 import '../../../models/user.dart';
 import '../../datasources/auth_datasource.dart';
@@ -20,7 +22,9 @@ class AuthApi extends AuthDataSource {
   @override
   Future<User> me() async {
     try {
-      Api.dio.options.headers["Authorization"] = "Bearer token";
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      Api.dio.options.headers["Authorization"] =
+          "Bearer ${prefs.get(("token"))}";
       final response = await Api.dio.get('/auth/me');
       return User.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {

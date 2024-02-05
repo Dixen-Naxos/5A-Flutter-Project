@@ -1,7 +1,6 @@
-import 'package:cinqa_flutter_project/datasources/datasources/user_datasource.dart';
-
 import '../../models/user.dart';
 import '../../models/user_posts.dart';
+import '../datasources/user_datasource.dart';
 
 class UserRepository {
   final UserDataSource userDataSource;

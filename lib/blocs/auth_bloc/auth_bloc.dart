@@ -14,6 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authRepository}) : super(const AuthState()) {
     on<SignUp>(_onSigUp);
     on<LogIn>(_onLogIn);
+    on<Me>(_onMe);
   }
 
   void _onSigUp(event, emit) async {
@@ -51,6 +52,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await prefs.setString('token', result.token);
       emit(
         state.copyWith(status: AuthStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: AuthStatus.error),
+      );
+      rethrow;
+    }
+  }
+
+  void _onMe(event, emit) async {
+    emit(
+      state.copyWith(status: AuthStatus.loading),
+    );
+
+    try {
+      final result = await authRepository.me();
+      emit(
+        state.copyWith(user: result, status: AuthStatus.success),
       );
     } catch (e) {
       emit(

@@ -6,6 +6,12 @@ import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  static const String routeName = "/";
+
+  static void navigateTo(BuildContext context) {
+    Navigator.of(context).pushNamed(routeName);
+  }
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -95,10 +101,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSignUpClick(BuildContext context) {
+    Navigator.pop(context);
     SignupPage.navigateTo(context);
   }
 
   void _onLogInClick(BuildContext context) {
+    Navigator.pop(context);
     LoginPage.navigateTo(context);
   }
 /*@override
