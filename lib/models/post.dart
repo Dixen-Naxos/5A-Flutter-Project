@@ -1,10 +1,10 @@
-import 'package:cinqa_flutter_project/models/image.dart';
 import 'package:cinqa_flutter_project/models/comment.dart';
+import 'package:cinqa_flutter_project/models/image.dart';
 import 'package:cinqa_flutter_project/models/user.dart';
 
 class Post {
   final int id;
-  final String createdAt;
+  final int createdAt;
   final String content;
   final User? author;
   final int? userId;
@@ -30,7 +30,8 @@ class Post {
       content: json["content"],
       author: json["author"] ? User.fromJson(json["author"]) : null,
       userId: json["user_id"],
-      comments: json["comments"] ? Comment.listFromJson(json["comments"]) : null,
+      comments:
+          json["comments"] ? Comment.listFromJson(json["comments"]) : null,
       commentCounts: json["comment_counts"],
       image: json["image"] ? Image.fromJson(json["image"]) : null,
     );
