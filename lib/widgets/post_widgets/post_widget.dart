@@ -9,11 +9,11 @@ class PostWidget extends StatelessWidget {
 
   final Post post;
 
-  User? user;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
-    user = user ?? post.author;
+    User? realUser = user ?? post.author;
     final f = DateFormat('dd/MM/yyyy');
 
     return Container(
@@ -22,7 +22,7 @@ class PostWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                user!.name,
+                realUser!.name,
                 style: const TextStyle(fontSize: 25),
               ),
               Text(
