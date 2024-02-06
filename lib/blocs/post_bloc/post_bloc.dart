@@ -3,7 +3,6 @@ import 'package:meta/meta.dart';
 
 import '../../datasources/repository/post_repository.dart';
 import '../../models/list_posts.dart';
-import '../../models/post.dart';
 
 part 'post_event.dart';
 
@@ -41,10 +40,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   void _onGetMoreUserPosts(event, emit) async {
-    emit(
-      state.copyWith(status: PostStatus.loading),
-    );
-
     try {
       final result = await postRepository.getUserPosts(
         event.userId,
