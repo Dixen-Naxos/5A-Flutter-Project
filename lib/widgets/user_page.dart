@@ -25,13 +25,13 @@ class _UserPageState extends State<UserPage> {
     final f = DateFormat('dd/MM/yyyy');
     return Scaffold(
       body: BlocBuilder<UserBloc, UserState>(
-        builder: (context, state) {
-          if (state.status == UserStatus.loading) {
+        builder: (context, userState) {
+          if (userState.status == UserStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state.status == UserStatus.success) {
+          if (userState.status == UserStatus.success) {
             return SafeArea(
               child: Column(
                 children: [
@@ -59,12 +59,12 @@ class _UserPageState extends State<UserPage> {
                                 runSpacing: 20,
                                 children: [
                                   Text(
-                                    "Nom d'utilisateur : ${state.user!.name}",
+                                    "Nom d'utilisateur : ${userState.user!.name}",
                                     style: const TextStyle(fontSize: 20),
                                   ),
                                   Text(
                                     style: const TextStyle(fontSize: 20),
-                                    "Membre depuis le : ${f.format(DateTime.fromMillisecondsSinceEpoch(state.user!.createdAt))}",
+                                    "Membre depuis le : ${f.format(DateTime.fromMillisecondsSinceEpoch(userState.user!.createdAt))}",
                                   ),
                                 ],
                               ),
@@ -74,14 +74,24 @@ class _UserPageState extends State<UserPage> {
                       ),
                     ),
                   ),
-                  BlocBuilder<PostBloc, PostState>(builder: (context, state) {
-                    if (state.status == PostStatus.loading) {
+                  BlocBuilder<PostBloc, PostState>(
+                      builder: (context, postState) {
+                    if (postState.status == PostStatus.loading) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
-                    if (state.status == PostStatus.success) {
-                      print(state.posts?.items.first.content);
+                    if (postState.status == PostStatus.success) {
+                      /*return Column(
+                        children: [
+                          PostWidget(
+                              post: postState.posts!.items.first,
+                              user: userState.user),
+                          PostWidget(
+                              post: postState.posts!.items[2],
+                              user: userState.user),
+                        ],
+                      );*/
                     }
                     return const Placeholder();
                   })

@@ -30,13 +30,17 @@ class Post {
       content: json["content"],
       author: json["author"] != null ? User.fromJson(json["author"]) : null,
       userId: json["user_id"],
-      comments: json["comments"] != null ? Comment.listFromJson(json["comments"]) : null,
-      commentCounts: json["comment_counts"],
+      comments: json["comments"] != null
+          ? Comment.listFromJson(json["comments"])
+          : null,
+      commentCounts: json["comments_count"],
       image: json["image"] != null ? Image.fromJson(json["image"]) : null,
     );
   }
 
   static List<Post> listFromJson(List<dynamic> list) {
-    return list.map((item) => Post.fromJson(item as Map<String, dynamic>)).toList();
+    return list
+        .map((item) => Post.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
 }
