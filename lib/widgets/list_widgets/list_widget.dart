@@ -23,7 +23,7 @@ class ListWidget extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
         controller: scrollController,
-        itemCount: posts.length,
+        itemCount: posts.length + 1,
         itemBuilder: (context, index) {
           if (index == posts.length) {
             onScroll();
@@ -33,6 +33,7 @@ class ListWidget extends StatelessWidget {
               user: user,
             );
           }
+          return null;
         }, separatorBuilder: (BuildContext context, int index) {
           return const Divider();
       },

@@ -48,8 +48,7 @@ class _UserPageState extends State<UserPage> {
                       Padding(
                         padding: const EdgeInsets.all(25),
                         child: SizedBox(
-                          width: 350,
-                          height: 200,
+                          height: 175,
                           child: Column(
                             children: [
                               const Padding(
@@ -84,24 +83,31 @@ class _UserPageState extends State<UserPage> {
                           ),
                         ),
                       ),
+                      const Divider(
+                        color: Colors.redAccent,
+                        thickness: 4,
+                      ),
                       BlocBuilder<PostBloc, PostState>(
-                          builder: (context, postState) {
-                        if (postState.status == PostStatus.loading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (postState.status == PostStatus.success) {
-                          print(postState.posts?.items.first.content);
-                          return ListWidget(
-                              scrollController: _scrollController,
-                              posts: postState.posts!.items,
-                              onScroll: () =>
-                                  _onScroll(postState.posts?.nextPage),
-                              user: userState.user);
-                        }
-                        return const Placeholder();
-                      })
+                        builder: (context, postState) {
+                          if (postState.status == PostStatus.loading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (postState.status == PostStatus.success) {
+                            print(postState.posts?.items.first.content);
+                            return ListWidget(
+                                scrollController: _scrollController,
+                                posts: postState.posts!.items,
+                                onScroll: () => _onScroll(
+                                    postState.posts?.nextPage != null
+                                        ? postState.posts!.nextPage
+                                        : null),
+                                user: userState.user);
+                          }
+                          return const Placeholder();
+                        },
+                      ),
                     ],
                   ),
                 ],
@@ -113,7 +119,6 @@ class _UserPageState extends State<UserPage> {
       ),
     );
   }
-
   void _onArrowBackClic(BuildContext context) {
     Navigator.pop(context);
   }
@@ -129,11 +134,12 @@ class _UserPageState extends State<UserPage> {
     );
 
     postBloc.add(
-      GetUserPosts(userId: widget.userId, page: 1, perPage: 50),
+      GetUserPosts(userId: widget.userId, page: 1, perPage: 3),
     );
   }
 
-  void _onScroll(int? nextPage) {
+
+  void _onScroll(int? nextPage) async {
     if (nextPage == null) {
       return;
     }
@@ -142,9 +148,10 @@ class _UserPageState extends State<UserPage> {
     final postBloc = BlocProvider.of<PostBloc>(context);
     if (maxScroll - currentScroll <= _scrollThreshold) {
       postBloc.add(
-          GetUserPosts(userId: widget.userId, page: nextPage, perPage: 50));
+          GetMoreUserPosts(userId: widget.userId, page: nextPage, perPage: 3));
     }
   }
+
 
   @override
   void dispose() {
