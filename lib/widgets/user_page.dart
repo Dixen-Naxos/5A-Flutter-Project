@@ -1,3 +1,4 @@
+import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +26,6 @@ class _UserPageState extends State<UserPage> {
     return Scaffold(
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
-          print(state.status);
           if (state.status == UserStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -73,7 +73,18 @@ class _UserPageState extends State<UserPage> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  BlocBuilder<PostBloc, PostState>(builder: (context, state) {
+                    if (state.status == PostStatus.loading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state.status == PostStatus.success) {
+                      print(state.posts?.items.first.content);
+                    }
+                    return const Placeholder();
+                  })
                 ],
               ),
             );
@@ -88,9 +99,14 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     super.initState();
     final userBloc = BlocProvider.of<UserBloc>(context);
-    print("toto");
+    final postBloc = BlocProvider.of<PostBloc>(context);
+
     userBloc.add(
       GetUser(userId: widget.userId),
+    );
+
+    postBloc.add(
+      GetUserPosts(userId: widget.userId, page: 1, perPage: 50),
     );
   }
 }

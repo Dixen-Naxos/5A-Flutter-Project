@@ -9,9 +9,12 @@ import 'package:cinqa_flutter_project/widgets/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'blocs/post_bloc/post_bloc.dart';
 import 'blocs/user_bloc/user_bloc.dart';
 import 'datasources/api/auth_api/auth_api.dart';
+import 'datasources/api/post_api/post_api.dart';
 import 'datasources/api/user_api/user_api.dart';
+import 'datasources/repository/post_repository.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +37,11 @@ class MyApp extends StatelessWidget {
             userDataSource: UserApi(),
           ),
         ),
+        RepositoryProvider(
+          create: (context) => PostRepository(
+            postDataSource: PostApi(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -53,7 +61,12 @@ class MyApp extends StatelessWidget {
             HomePage.routeName: (context) => const HomePage(),
             SignupPage.routeName: (context) => const SignupPage(),
             LoginPage.routeName: (context) => const LoginPage(),
-            MainPage.routeName: (context) => const MainPage(),
+            MainPage.routeName: (context) => BlocProvider(
+                  create: (context) => PostBloc(
+                    postRepository: context.read<PostRepository>(),
+                  ),
+                  child: const MainPage(),
+                ),
           },
           onGenerateRoute: (settings) {
             Widget content = const SizedBox();
@@ -62,7 +75,12 @@ class MyApp extends StatelessWidget {
               case UserPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = UserPage(userId: arguments);
+                  content = BlocProvider(
+                    create: (context) => PostBloc(
+                      postRepository: context.read<PostRepository>(),
+                    ),
+                    child: UserPage(userId: arguments),
+                  );
                 }
                 break;
             }
