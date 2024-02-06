@@ -3,8 +3,8 @@ import 'package:cinqa_flutter_project/widgets/input_widgets/password_field.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/auth_bloc/auth_bloc.dart';
-import 'button_widgets/button_widget.dart';
+import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../button_widgets/button_widget.dart';
 import 'home_page.dart';
 import 'main_page.dart';
 

@@ -1,10 +1,10 @@
-import 'package:cinqa_flutter_project/widgets/home_page.dart';
-import 'package:cinqa_flutter_project/widgets/user_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/auth_bloc/auth_bloc.dart';
-import '../models/user.dart';
+import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../../models/user.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

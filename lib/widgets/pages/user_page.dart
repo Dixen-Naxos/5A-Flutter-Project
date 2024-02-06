@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../blocs/user_bloc/user_bloc.dart';
-import 'list_widgets/list_widget.dart';
+import '../../blocs/user_bloc/user_bloc.dart';
+import '../list_widgets/posts_list_widget.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key, required this.userId});
@@ -96,7 +96,7 @@ class _UserPageState extends State<UserPage> {
                           }
                           if (postState.status == PostStatus.success) {
                             print(postState.posts?.items.first.content);
-                            return ListWidget(
+                            return PostsListWidget(
                                 scrollController: _scrollController,
                                 posts: postState.posts!.items,
                                 onScroll: () => _onScroll(

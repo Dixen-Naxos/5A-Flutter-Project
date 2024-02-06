@@ -1,6 +1,6 @@
 import 'package:cinqa_flutter_project/widgets/button_widgets/button_widget.dart';
-import 'package:cinqa_flutter_project/widgets/login_page.dart';
-import 'package:cinqa_flutter_project/widgets/signup_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/login_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

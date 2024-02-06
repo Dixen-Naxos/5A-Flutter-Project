@@ -4,8 +4,8 @@ import '../../models/post.dart';
 import '../../models/user.dart';
 import '../post_widgets/post_widget.dart';
 
-class ListWidget extends StatelessWidget {
-  const ListWidget({
+class PostsListWidget extends StatelessWidget {
+  const PostsListWidget({
     super.key,
     required this.scrollController,
     required this.posts,

@@ -1,12 +1,12 @@
-import 'package:cinqa_flutter_project/widgets/home_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/input_widgets/input_field.dart';
 import 'package:cinqa_flutter_project/widgets/input_widgets/password_field.dart';
-import 'package:cinqa_flutter_project/widgets/main_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/auth_bloc/auth_bloc.dart';
-import 'button_widgets/button_widget.dart';
+import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../button_widgets/button_widget.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
