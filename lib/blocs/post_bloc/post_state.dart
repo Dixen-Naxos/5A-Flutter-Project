@@ -25,4 +25,24 @@ class PostState {
       status: status ?? this.status,
     );
   }
+
+  PostState addPosts({
+    ListPosts? posts,
+    PostStatus? status,
+  }) {
+    ListPosts newList = ListPosts(itemsReceived: posts!.itemsReceived,
+      curPage: posts.curPage,
+      nextPage: posts.nextPage,
+      prevPage: posts.prevPage,
+      offset: posts.offset,
+      itemsTotal: posts.itemsTotal,
+      pageTotal: posts.pageTotal,
+      items: this.posts!.items..addAll(posts.items),
+    );
+
+    return PostState(
+      posts: newList,
+      status: status ?? this.status,
+    );
+  }
 }

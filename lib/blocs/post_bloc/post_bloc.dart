@@ -6,6 +6,7 @@ import '../../models/list_posts.dart';
 import '../../models/post.dart';
 
 part 'post_event.dart';
+
 part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
@@ -13,6 +14,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   PostBloc({required this.postRepository}) : super(const PostState()) {
     on<GetUserPosts>(_onGetUserPosts);
+    on<GetMoreUserPosts>(_onGetMoreUserPosts);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -28,6 +30,30 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       );
       emit(
         state.copyWith(posts: result, status: PostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: PostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onGetMoreUserPosts(event, emit) async {
+    emit(
+      state.copyWith(status: PostStatus.loading),
+    );
+
+    try {
+      final result = await postRepository.getUserPosts(
+        event.userId,
+        event.page,
+        event.perPage,
+      );
+
+      emit(
+        state.addPosts(posts: result, status: PostStatus.success),
       );
     } catch (e) {
       emit(
