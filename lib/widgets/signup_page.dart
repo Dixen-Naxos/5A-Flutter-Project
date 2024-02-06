@@ -32,13 +32,14 @@ class _SignupPageState extends State<SignupPage> {
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state.status == AuthStatus.success) {
+            if (state.status == AuthStatus.connect) {
               Navigator.pop(context);
               MainPage.navigateTo(context);
             }
           },
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
+              print(state.status);
               if (state.status == AuthStatus.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),

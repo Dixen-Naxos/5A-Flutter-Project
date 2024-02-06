@@ -22,7 +22,7 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   final _scrollController = ScrollController();
-  final _scrollThreshold =  200.0;
+  final _scrollThreshold = 200.0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,66 +37,73 @@ class _UserPageState extends State<UserPage> {
           }
           if (userState.status == UserStatus.success) {
             return SafeArea(
-              child: Column(
+              child: Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: SizedBox(
-                      width: 350,
-                      height: 200,
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 15),
-                            child: Icon(
-                              Icons.account_circle,
-                              color: Colors.black,
-                              size: 75,
-                            ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  IconButton(
+                    onPressed: () => _onArrowBackClic(context),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25),
+                        child: SizedBox(
+                          width: 350,
+                          height: 200,
+                          child: Column(
                             children: [
-                              Wrap(
-                                spacing: 20,
-                                runSpacing: 20,
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 15),
+                                child: Icon(
+                                  Icons.account_circle,
+                                  color: Colors.black,
+                                  size: 75,
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Nom d'utilisateur : ${userState.user!.name}",
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    style: const TextStyle(fontSize: 20),
-                                    "Membre depuis le : ${f.format(
-                                        DateTime.fromMillisecondsSinceEpoch(
-                                            userState.user!.createdAt))}",
+                                  Wrap(
+                                    spacing: 20,
+                                    runSpacing: 20,
+                                    children: [
+                                      Text(
+                                        "Nom d'utilisateur : ${userState.user!.name}",
+                                        style: const TextStyle(fontSize: 20),
+                                      ),
+                                      Text(
+                                        style: const TextStyle(fontSize: 20),
+                                        "Membre depuis le : ${f.format(DateTime.fromMillisecondsSinceEpoch(userState.user!.createdAt))}",
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                      BlocBuilder<PostBloc, PostState>(
+                          builder: (context, postState) {
+                        if (postState.status == PostStatus.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (postState.status == PostStatus.success) {
+                          print(postState.posts?.items.first.content);
+                          return ListWidget(
+                              scrollController: _scrollController,
+                              posts: postState.posts!.items,
+                              onScroll: () =>
+                                  _onScroll(postState.posts?.nextPage),
+                              user: userState.user);
+                        }
+                        return const Placeholder();
+                      })
+                    ],
                   ),
-                  BlocBuilder<PostBloc, PostState>(builder: (context, postState) {
-                    if (postState.status == PostStatus.loading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (postState.status == PostStatus.success) {
-                      print(postState.posts?.items.first.content);
-                      return ListWidget(
-                        scrollController: _scrollController,
-                        posts: postState.posts!.items,
-                        onScroll: () => _onScroll(postState.posts?.nextPage),
-                        user: userState.user
-                      );
-                    }
-                    return const Placeholder();
-                  })
                 ],
               ),
             );
@@ -105,6 +112,10 @@ class _UserPageState extends State<UserPage> {
         },
       ),
     );
+  }
+
+  void _onArrowBackClic(BuildContext context) {
+    Navigator.pop(context);
   }
 
   @override
@@ -123,14 +134,15 @@ class _UserPageState extends State<UserPage> {
   }
 
   void _onScroll(int? nextPage) {
-    if(nextPage == null){
+    if (nextPage == null) {
       return;
     }
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     final postBloc = BlocProvider.of<PostBloc>(context);
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      postBloc.add(GetUserPosts(userId: widget.userId, page: nextPage, perPage: 50));
+      postBloc.add(
+          GetUserPosts(userId: widget.userId, page: nextPage, perPage: 50));
     }
   }
 
@@ -139,5 +151,4 @@ class _UserPageState extends State<UserPage> {
     _scrollController.dispose();
     super.dispose();
   }
-
 }

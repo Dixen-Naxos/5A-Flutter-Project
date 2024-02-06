@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state.status == AuthStatus.success) {
+            if (state.status == AuthStatus.connect) {
               Navigator.pop(context);
               MainPage.navigateTo(context);
             }

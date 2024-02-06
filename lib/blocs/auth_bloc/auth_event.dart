@@ -26,3 +26,9 @@ class LogIn extends AuthEvent {
 }
 
 class Me extends AuthEvent {}
+
+class Disconnect extends AuthEvent {}
+
+class Connect extends AuthEvent {}
+
+class Init extends AuthEvent {}

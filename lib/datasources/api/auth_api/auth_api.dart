@@ -13,7 +13,10 @@ class AuthApi extends AuthDataSource {
         "email": email,
         "password": password,
       });
-      return Token(token: response.data["authToken"]);
+      return Token(
+        token: response.data["authToken"],
+        user: User.fromJson(response.data["user"]),
+      );
     } catch (e) {
       rethrow;
     }
@@ -40,7 +43,10 @@ class AuthApi extends AuthDataSource {
         "email": email,
         "password": password,
       });
-      return Token(token: response.data["authToken"]);
+      return Token(
+        token: response.data["authToken"],
+        user: User.fromJson(response.data["user"]),
+      );
     } catch (e) {
       rethrow;
     }

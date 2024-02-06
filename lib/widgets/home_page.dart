@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  static const String routeName = "/";
+  static const String routeName = "/homePage";
 
   static void navigateTo(BuildContext context) {
     Navigator.of(context).pushNamed(routeName);
@@ -109,11 +109,13 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
     LoginPage.navigateTo(context);
   }
+
 /*@override
   void initState() {
     super.initState();
     final authBloc = BlocProvider.of<AuthBloc>(context);
-    authBloc.add(SignUp(
-        name: "Tameree", email: "Tamere@gmail.com", password: "Password00!"));
+    authBloc.add(
+      Me(),
+    );
   }*/
 }
