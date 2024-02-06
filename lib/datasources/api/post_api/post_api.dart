@@ -43,7 +43,10 @@ class PostApi extends PostDataSource {
   @override
   Future<ListPosts> getPosts(int page, int perPage) async {
     try {
-      final response = await Api.dio.get('/post');
+      final response = await Api.dio.get('/post', queryParameters: {
+        "page": page,
+        "per_page": perPage,
+      });
       return ListPosts.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;
@@ -66,10 +69,11 @@ class PostApi extends PostDataSource {
 
   @override
   Future<ListPosts> getUserPosts(int id, int page, int perPage) async {
+    print("$id, $page, $perPage");
     try {
-      final response = await Api.dio.get('/user/$id/posts', data: {
+      final response = await Api.dio.get('/user/$id/posts', queryParameters: {
         "page": page,
-        "perPage": perPage
+        "per_page": perPage,
       });
       return ListPosts.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
