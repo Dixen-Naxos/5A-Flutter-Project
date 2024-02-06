@@ -1,7 +1,6 @@
 import 'package:cinqa_flutter_project/models/list_posts.dart';
 
 import '../../../models/post.dart';
-import '../../../models/user_posts.dart';
 import '../../datasources/post_datasource.dart';
 import '../api.dart';
 

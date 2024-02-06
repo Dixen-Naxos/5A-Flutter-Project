@@ -1,6 +1,5 @@
 import '../../models/list_posts.dart';
 import '../../models/post.dart';
-import '../../models/user_posts.dart';
 import '../datasources/post_datasource.dart';
 
 class PostRepository {
