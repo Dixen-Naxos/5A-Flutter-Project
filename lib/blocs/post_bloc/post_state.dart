@@ -5,6 +5,7 @@ enum PostStatus {
   loading,
   success,
   error,
+  scrollLoading,
 }
 
 class PostState {
@@ -30,7 +31,8 @@ class PostState {
     ListPosts? posts,
     PostStatus? status,
   }) {
-    ListPosts newList = ListPosts(itemsReceived: posts!.itemsReceived,
+    ListPosts newList = ListPosts(
+      itemsReceived: posts!.itemsReceived,
       curPage: posts.curPage,
       nextPage: posts.nextPage,
       prevPage: posts.prevPage,

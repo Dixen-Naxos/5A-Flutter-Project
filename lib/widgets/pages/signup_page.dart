@@ -39,7 +39,6 @@ class _SignupPageState extends State<SignupPage> {
           },
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              print(state.status);
               if (state.status == AuthStatus.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),

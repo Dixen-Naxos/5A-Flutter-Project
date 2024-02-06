@@ -26,3 +26,23 @@ class GetMoreUserPosts extends PostEvent {
     required this.perPage
   });
 }
+
+class GetPosts extends PostEvent {
+  final int page;
+  final int perPage;
+
+  GetPosts({
+    required this.page,
+    required this.perPage
+  });
+}
+
+class GetMorePosts extends PostEvent {
+  final int page;
+  final int perPage;
+
+  GetMorePosts({
+    required this.page,
+    required this.perPage
+  });
+}
