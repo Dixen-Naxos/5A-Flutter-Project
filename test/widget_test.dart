@@ -1,30 +1,131 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
+import 'package:cinqa_flutter_project/datasources/api/auth_api/error_auth_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/auth_api/fake_auth_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/post_api/error_post_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/post_api/fake_post_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/user_api/error_user_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/user_api/fake_user_api.dart';
+import 'package:cinqa_flutter_project/datasources/datasources/auth_datasource.dart';
+import 'package:cinqa_flutter_project/datasources/datasources/post_datasource.dart';
+import 'package:cinqa_flutter_project/datasources/datasources/user_datasource.dart';
+import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
+import 'package:cinqa_flutter_project/datasources/repository/post_repository.dart';
+import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
+import 'package:cinqa_flutter_project/widgets/pages/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:cinqa_flutter_project/main.dart';
+Widget _setUpMainPage(
+  PostDataSource postDataSource,
+  UserDataSource userDatasource,
+  AuthDataSource authDataSource,
+) {
+  return MultiRepositoryProvider(
+    providers: [
+      RepositoryProvider(
+        create: (context) => AuthRepository(
+          authDataSource: authDataSource,
+        ),
+      ),
+      RepositoryProvider(
+        create: (context) => UserRepository(
+          userDataSource: userDatasource,
+        ),
+      ),
+      RepositoryProvider(
+        create: (context) => PostRepository(
+          postDataSource: postDataSource,
+        ),
+      ),
+    ],
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(
+            authRepository: context.read<AuthRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UserBloc(
+            userRepository: context.read<UserRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => DetailPostBloc(
+            postRepository: context.read<PostRepository>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => PostBloc(
+            postRepository: context.read<PostRepository>(),
+          ),
+        ),
+      ],
+      child: const MaterialApp(
+        home: MainPage(),
+      ),
+    ),
+  );
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('$MainPage', () {
+    testWidgets('$MainPage should display the right title',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        FakeAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.byIcon(Icons.house), findsOneWidget);
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    testWidgets('$MainPage should display an error if an error occurred',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        ErrorPostApi(),
+        ErrorUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 3));
+      expect(find.text('Oups, une erreur est survenue.'), findsOneWidget);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    testWidgets('$MainPage should display a loading indicator',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        FakeAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 3));
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 3));
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    /// Ne passe pas car état vide non géré.
+    // testWidgets('$ProductsScreen should display a specific message when empty result', (WidgetTester tester) async {
+    //   await tester.pumpWidget(_setUpProductsScreen(EmptyDataSource()));
+    //   await tester.pump(const Duration(seconds: 3));
+    //   expect(find.text('Aucun produit'), findsOneWidget);
+    // });
+
+    testWidgets('$MainPage should display a loader when Loading',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        FakeAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 3));
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pumpAndSettle();
+    });
   });
 }
