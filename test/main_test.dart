@@ -2,6 +2,7 @@ import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
+import 'package:cinqa_flutter_project/datasources/api/auth_api/error_auth_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/fake_auth_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/post_api/fake_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/user_api/fake_user_api.dart';
@@ -81,6 +82,17 @@ void main() {
       ));
       await tester.pump(const Duration(seconds: 6));
       expect(find.byIcon(Icons.house), findsOneWidget);
+    });
+
+    testWidgets('$MainPage should display the right title',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.byIcon(Icons.house), findsNothing);
     });
 
     /// Ne passe pas car état vide non géré.

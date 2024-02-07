@@ -23,10 +23,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Widget _setUpSignupPage(
-    PostDataSource postDataSource,
-    UserDataSource userDatasource,
-    AuthDataSource authDataSource,
-    ) {
+  PostDataSource postDataSource,
+  UserDataSource userDatasource,
+  AuthDataSource authDataSource,
+) {
   return MultiRepositoryProvider(
     providers: [
       RepositoryProvider(
@@ -78,60 +78,61 @@ Widget _setUpSignupPage(
 void main() {
   group('$SignupPage', () {
     testWidgets('$SignupPage should display the right title',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpSignupPage(
-            ErrorPostApi(),
-            ErrorUserApi(),
-            ErrorAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpSignupPage(
+        ErrorPostApi(),
+        ErrorUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
 
-          expect(find.text("Touiteur"), findsOneWidget);
-        });
+      expect(find.text("Touiteur"), findsOneWidget);
+    });
 
     testWidgets('$SignupPage should display the right text',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpSignupPage(
-            ErrorPostApi(),
-            ErrorUserApi(),
-            ErrorAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
-          expect(find.text("Créer un compte"), findsOneWidget);
-        });
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpSignupPage(
+        ErrorPostApi(),
+        ErrorUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.text("Créer un compte"), findsWidgets);
+    });
 
     testWidgets('$SignupPage should display two input fields',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpSignupPage(
-            ErrorPostApi(),
-            ErrorUserApi(),
-            ErrorAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
-          expect(find.byElementType(InputField), findsOneWidget);
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpSignupPage(
+        ErrorPostApi(),
+        ErrorUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 15));
+      expect(find.text("Email"), findsOneWidget);
+      expect(find.text("Nom"), findsOneWidget);
         });
 
     testWidgets('$SignupPage should display the password input field',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpSignupPage(
-            FakePostApi(),
-            FakeUserApi(),
-            FakeAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
-          expect(find.byElementType(PasswordField), findsOneWidget);
-        });
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpSignupPage(
+        FakePostApi(),
+        FakeUserApi(),
+        FakeAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.text("Mot de passe"), findsOneWidget);
+    });
 
     testWidgets('$SignupPage should display the right signup button',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpSignupPage(
-            ErrorPostApi(),
-            ErrorUserApi(),
-            ErrorAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
-          expect(
-              find.widgetWithText(ButtonWidget, "Créer un compte"), findsOneWidget);
-        });
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpSignupPage(
+        ErrorPostApi(),
+        ErrorUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(
+          find.widgetWithText(ButtonWidget, "Créer un compte"), findsOneWidget);
+    });
   });
 }

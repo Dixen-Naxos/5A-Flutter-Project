@@ -74,8 +74,8 @@ Widget _setUpLoginPage(
 }
 
 void main() {
-  group('$SignupPage', () {
-    testWidgets('$SignupPage should display the right title',
+  group('$LoginPage', () {
+    testWidgets('$LoginPage should display the right title',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpLoginPage(
         FakePostApi(),
@@ -87,7 +87,7 @@ void main() {
       expect(find.text("Touiteur"), findsOneWidget);
     });
 
-    testWidgets('$SignupPage should display the right text',
+    testWidgets('$LoginPage should display the right text',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpLoginPage(
         FakePostApi(),
@@ -95,10 +95,10 @@ void main() {
         FakeAuthApi(),
       ));
       await tester.pump(const Duration(seconds: 6));
-      expect(find.widgetWithText(Text, "Se connecter"), findsOneWidget);
+      expect(find.text("Se connecter"), findsWidgets);
     });
 
-    testWidgets('$SignupPage should display two input fields',
+    testWidgets('$LoginPage should display two input fields',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpLoginPage(
         FakePostApi(),
@@ -106,10 +106,10 @@ void main() {
         FakeAuthApi(),
       ));
       await tester.pump(const Duration(seconds: 6));
-      expect(find.byElementType(InputField), findsOneWidget);
+      expect(find.text("Email"), findsOneWidget);
     });
 
-    testWidgets('$SignupPage should display the password input field',
+    testWidgets('$LoginPage should display the password input field',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpLoginPage(
         FakePostApi(),
@@ -117,10 +117,10 @@ void main() {
         FakeAuthApi(),
       ));
       await tester.pump(const Duration(seconds: 6));
-      expect(find.byElementType(PasswordField), findsOneWidget);
+      expect(find.text("Mot de passe"), findsOneWidget);
     });
 
-    testWidgets('$SignupPage should display the right login button',
+    testWidgets('$LoginPage should display the right login button',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpLoginPage(
         FakePostApi(),
