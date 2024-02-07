@@ -96,6 +96,7 @@ class _UserPageState extends State<UserPage> {
                           }
                           if (postState.status == PostStatus.success) {
                             return PostsListWidget(
+                                onRefresh: _getPosts,
                                 scrollController: _scrollController,
                                 posts: postState.posts!.items,
                                 onScroll: () => _onScroll(
@@ -121,6 +122,13 @@ class _UserPageState extends State<UserPage> {
 
   void _onArrowBackClic(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  Future<void> _getPosts() async {
+    final postBloc = BlocProvider.of<PostBloc>(context);
+    postBloc.add(
+      GetUserPosts(userId: widget.userId, page: 1, perPage: 50),
+    );
   }
 
   @override

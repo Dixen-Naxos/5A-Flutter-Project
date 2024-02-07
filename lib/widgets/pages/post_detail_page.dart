@@ -117,7 +117,6 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
   @override
   void initState() {
-    print(widget.postId);
     final postBloc = BlocProvider.of<DetailPostBloc>(context);
     postBloc.add(
       GetPost(postId: widget.postId),

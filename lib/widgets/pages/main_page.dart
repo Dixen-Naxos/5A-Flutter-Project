@@ -95,6 +95,7 @@ class _MainPageState extends State<MainPage> {
                           }
                           if (postState.status == PostStatus.success) {
                             return PostsListWidget(
+                              onRefresh: _getPosts,
                               scrollController: _scrollController,
                               posts: postState.posts!.items,
                               onScroll: () => _onScroll(
@@ -131,17 +132,21 @@ class _MainPageState extends State<MainPage> {
   void _onConnectClic(BuildContext context) {
     HomePage.navigateTo(context);
   }
+  Future<void> _getPosts() async {
+    final postBloc = BlocProvider.of<PostBloc>(context);
+    postBloc.add(
+      GetPosts(page: 1, perPage: 15),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     final authBloc = BlocProvider.of<AuthBloc>(context);
-    final postBloc = BlocProvider.of<PostBloc>(context);
     authBloc.add(
       Connect(),
     );
-
-    postBloc.add(GetPosts(page: 1, perPage: 15));
+    _getPosts();
   }
 
   void _onScroll(int? nextPage) async {
