@@ -5,7 +5,6 @@ import '../../datasources/repository/post_repository.dart';
 import '../../models/list_posts.dart';
 
 part 'post_event.dart';
-
 part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {

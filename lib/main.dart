@@ -1,9 +1,11 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/login_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/main_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/post_detail_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/signup_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +74,17 @@ class MyApp extends StatelessWidget {
             Widget content = const SizedBox();
 
             switch (settings.name) {
+              case PostDetailPage.routeName:
+                final arguments = settings.arguments;
+                if (arguments is int) {
+                  content = BlocProvider(
+                    create: (context) => DetailPostBloc(
+                      postRepository: context.read<PostRepository>(),
+                    ),
+                    child: PostDetailPage(postId: arguments),
+                  );
+                }
+                break;
               case UserPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {

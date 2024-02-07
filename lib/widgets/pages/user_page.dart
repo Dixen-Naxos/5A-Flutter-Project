@@ -21,7 +21,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  final _scrollController = ScrollController();
+  late final _scrollController;
   final _scrollThreshold = 200.0;
 
   @override
@@ -119,6 +119,7 @@ class _UserPageState extends State<UserPage> {
       ),
     );
   }
+
   void _onArrowBackClic(BuildContext context) {
     Navigator.pop(context);
   }
@@ -128,7 +129,7 @@ class _UserPageState extends State<UserPage> {
     super.initState();
     final userBloc = BlocProvider.of<UserBloc>(context);
     final postBloc = BlocProvider.of<PostBloc>(context);
-
+    _scrollController = ScrollController();
     userBloc.add(
       GetUser(userId: widget.userId),
     );
@@ -138,9 +139,9 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-
   void _onScroll(int? nextPage) async {
-    if (nextPage == null) {
+    if (nextPage == null || !_scrollController.hasClients) {
+      print("bite");
       return;
     }
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -151,7 +152,6 @@ class _UserPageState extends State<UserPage> {
           GetMoreUserPosts(userId: widget.userId, page: nextPage, perPage: 3));
     }
   }
-
 
   @override
   void dispose() {

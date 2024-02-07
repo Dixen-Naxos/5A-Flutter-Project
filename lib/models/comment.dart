@@ -2,7 +2,7 @@ import 'package:cinqa_flutter_project/models/user.dart';
 
 class Comment {
   final int id;
-  final String createdAt;
+  final int createdAt;
   final String content;
   final User author;
 
@@ -22,7 +22,9 @@ class Comment {
     );
   }
 
-  static List<Comment> listFromJson(List<Map<String, dynamic>> list) {
-    return list.map((item) => Comment.fromJson(item)).toList();
+  static List<Comment> listFromJson(List<dynamic> list) {
+    return list
+        .map((item) => Comment.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
 }

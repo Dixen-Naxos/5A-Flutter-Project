@@ -8,11 +8,8 @@ class GetUserPosts extends PostEvent {
   final int page;
   final int perPage;
 
-  GetUserPosts({
-    required this.userId,
-    required this.page,
-    required this.perPage
-  });
+  GetUserPosts(
+      {required this.userId, required this.page, required this.perPage});
 }
 
 class GetMoreUserPosts extends PostEvent {
@@ -20,9 +17,6 @@ class GetMoreUserPosts extends PostEvent {
   final int page;
   final int perPage;
 
-  GetMoreUserPosts({
-    required this.userId,
-    required this.page,
-    required this.perPage
-  });
+  GetMoreUserPosts(
+      {required this.userId, required this.page, required this.perPage});
 }
