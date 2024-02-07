@@ -73,7 +73,7 @@ Widget _setUpMainPage(
 
 void main() {
   group('$MainPage', () {
-    testWidgets('$MainPage should display the right title',
+    testWidgets('$MainPage should display an house icon',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpMainPage(
         FakePostApi(),
@@ -84,7 +84,7 @@ void main() {
       expect(find.byIcon(Icons.house), findsOneWidget);
     });
 
-    testWidgets('$MainPage should display the right title',
+    testWidgets('$MainPage shouldnt display a house icon',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpMainPage(
         FakePostApi(),
