@@ -95,7 +95,6 @@ class _UserPageState extends State<UserPage> {
                             );
                           }
                           if (postState.status == PostStatus.success) {
-                            print(postState.posts?.items.first.content);
                             return PostsListWidget(
                                 scrollController: _scrollController,
                                 posts: postState.posts!.items,
@@ -135,7 +134,7 @@ class _UserPageState extends State<UserPage> {
     );
 
     postBloc.add(
-      GetUserPosts(userId: widget.userId, page: 1, perPage: 3),
+      GetUserPosts(userId: widget.userId, page: 1, perPage: 100),
     );
   }
 
@@ -149,7 +148,12 @@ class _UserPageState extends State<UserPage> {
     final postBloc = BlocProvider.of<PostBloc>(context);
     if (maxScroll - currentScroll <= _scrollThreshold) {
       postBloc.add(
-          GetMoreUserPosts(userId: widget.userId, page: nextPage, perPage: 3));
+        GetMoreUserPosts(
+          userId: widget.userId,
+          page: nextPage,
+          perPage: 100,
+        ),
+      );
     }
   }
 

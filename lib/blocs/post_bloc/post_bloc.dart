@@ -13,6 +13,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc({required this.postRepository}) : super(const PostState()) {
     on<GetUserPosts>(_onGetUserPosts);
     on<GetMoreUserPosts>(_onGetMoreUserPosts);
+    on<GetPosts>(_onGetPosts);
+    on<GetMorePosts>(_onGetMorePosts);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -42,6 +44,51 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     try {
       final result = await postRepository.getUserPosts(
         event.userId,
+        event.page,
+        event.perPage,
+      );
+
+      emit(
+        state.addPosts(posts: result, status: PostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: PostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onGetPosts(event, emit) async {
+    emit(
+      state.copyWith(status: PostStatus.loading),
+    );
+
+    try {
+      final result = await postRepository.getPosts(
+        event.page,
+        event.perPage,
+      );
+      emit(
+        state.copyWith(posts: result, status: PostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: PostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onGetMorePosts(event, emit) async {
+    emit(
+      state.copyWith(status: PostStatus.scrollLoading),
+    );
+
+    try {
+      final result = await postRepository.getPosts(
         event.page,
         event.perPage,
       );

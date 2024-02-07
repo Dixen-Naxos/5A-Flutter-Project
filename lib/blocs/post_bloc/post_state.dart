@@ -5,6 +5,7 @@ enum PostStatus {
   loading,
   success,
   error,
+  scrollLoading,
 }
 
 class PostState {
