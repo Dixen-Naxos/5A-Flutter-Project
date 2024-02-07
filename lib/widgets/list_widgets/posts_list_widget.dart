@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/detail_post_bloc/detail_post_bloc.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
 import '../post_widgets/post_widget.dart';
@@ -22,26 +24,33 @@ class PostsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: RefreshIndicator(
-        onRefresh: onRefresh,
-        child: ListView.separated(
-          controller: scrollController,
-          itemCount: posts.length + 1,
-          itemBuilder: (context, index) {
-            if (index == posts.length) {
-              onScroll();
-            } else {
-              return PostWidget(
-                post: posts[index],
-                user: user,
-              );
-            }
-            return null;
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider();
-          },
+    return BlocListener<DetailPostBloc, DetailPostState>(
+      listener: (context, state) {
+        if (state.status == DetailPostStatus.deletedFromDetail) {
+          onRefresh();
+        }
+      },
+      child: Expanded(
+        child: RefreshIndicator(
+          onRefresh: onRefresh,
+          child: ListView.separated(
+            controller: scrollController,
+            itemCount: posts.length + 1,
+            itemBuilder: (context, index) {
+              if (index == posts.length) {
+                onScroll();
+              } else {
+                return PostWidget(
+                  post: posts[index],
+                  user: user,
+                );
+              }
+              return null;
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider();
+            },
+          ),
         ),
       ),
     );

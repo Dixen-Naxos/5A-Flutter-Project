@@ -5,23 +5,23 @@ import '../../datasources/repository/post_repository.dart';
 import '../../models/list_posts.dart';
 import '../../models/post.dart';
 
-part 'post_event.dart';
-part 'post_state.dart';
+part 'user_post_event.dart';
+part 'user_post_state.dart';
 
-class PostBloc extends Bloc<PostEvent, PostState> {
+class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
   final PostRepository postRepository;
 
-  PostBloc({required this.postRepository}) : super(const PostState()) {
+  UserPostBloc({required this.postRepository}) : super(const UserPostState()) {
     on<GetUserPosts>(_onGetUserPosts);
     on<GetMoreUserPosts>(_onGetMoreUserPosts);
     on<GetPosts>(_onGetPosts);
     on<GetMorePosts>(_onGetMorePosts);
-    on<DeletePost>(_onDelete);
+    on<UserDeletePost>(_onDelete);
   }
 
   void _onGetUserPosts(event, emit) async {
     emit(
-      state.copyWith(status: PostStatus.loading),
+      state.copyWith(status: UserPostStatus.loading),
     );
 
     try {
@@ -31,11 +31,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         event.perPage,
       );
       emit(
-        state.copyWith(posts: result, status: PostStatus.success),
+        state.copyWith(posts: result, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: UserPostStatus.error),
       );
 
       rethrow;
@@ -52,11 +52,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       );
 
       emit(
-        state.addPosts(posts: result, status: PostStatus.success),
+        state.addPosts(posts: result, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: UserPostStatus.error),
       );
 
       rethrow;
@@ -65,7 +65,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   void _onGetPosts(event, emit) async {
     emit(
-      state.copyWith(status: PostStatus.loading),
+      state.copyWith(status: UserPostStatus.loading),
     );
 
     try {
@@ -74,11 +74,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         event.perPage,
       );
       emit(
-        state.copyWith(posts: result, status: PostStatus.success),
+        state.copyWith(posts: result, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: UserPostStatus.error),
       );
 
       rethrow;
@@ -94,11 +94,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       );
 
       emit(
-        state.addPosts(posts: result, status: PostStatus.success),
+        state.addPosts(posts: result, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: UserPostStatus.error),
       );
 
       rethrow;
@@ -108,11 +108,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   void _onDelete(event, emit) async {
     try {
       emit(
-        state.removePosts(post: event.post, status: PostStatus.success),
+        state.removePosts(post: event.post, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: UserPostStatus.error),
       );
 
       rethrow;

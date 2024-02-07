@@ -1,3 +1,5 @@
+import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
+import 'package:cinqa_flutter_project/widgets/button_widgets/new_post_button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/list_widgets/posts_list_widget.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth_bloc/auth_bloc.dart';
-import '../../blocs/post_bloc/post_bloc.dart';
 import '../../models/user.dart';
 
 class MainPage extends StatefulWidget {
@@ -86,14 +87,14 @@ class _MainPageState extends State<MainPage> {
                                 ),
                         ],
                       ),
-                      BlocBuilder<PostBloc, PostState>(
+                      BlocBuilder<AllPostBloc, AllPostState>(
                         builder: (context, postState) {
-                          if (postState.status == PostStatus.loading) {
+                          if (postState.status == AllPostStatus.loading) {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (postState.status == PostStatus.success) {
+                          if (postState.status == AllPostStatus.success) {
                             return PostsListWidget(
                               onRefresh: _getPosts,
                               scrollController: _scrollController,
@@ -115,6 +116,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
+      floatingActionButton: const NewPostButtonWidget(),
     );
   }
 
@@ -132,8 +134,9 @@ class _MainPageState extends State<MainPage> {
   void _onConnectClic(BuildContext context) {
     HomePage.navigateTo(context);
   }
+
   Future<void> _getPosts() async {
-    final postBloc = BlocProvider.of<PostBloc>(context);
+    final postBloc = BlocProvider.of<AllPostBloc>(context);
     postBloc.add(
       GetPosts(page: 1, perPage: 15),
     );
@@ -155,7 +158,7 @@ class _MainPageState extends State<MainPage> {
     }
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    final postBloc = BlocProvider.of<PostBloc>(context);
+    final postBloc = BlocProvider.of<AllPostBloc>(context);
     if (maxScroll - currentScroll <= _scrollThreshold &&
         !postBloc.state.scrollLoading) {
       postBloc.add(

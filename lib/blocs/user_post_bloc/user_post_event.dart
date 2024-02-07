@@ -1,9 +1,9 @@
-part of 'post_bloc.dart';
+part of 'user_post_bloc.dart';
 
 @immutable
-abstract class PostEvent {}
+abstract class UserPostEvent {}
 
-class GetUserPosts extends PostEvent {
+class GetUserPosts extends UserPostEvent {
   final int userId;
   final int page;
   final int perPage;
@@ -12,7 +12,7 @@ class GetUserPosts extends PostEvent {
       {required this.userId, required this.page, required this.perPage});
 }
 
-class GetMoreUserPosts extends PostEvent {
+class GetMoreUserPosts extends UserPostEvent {
   final int userId;
   final int page;
   final int perPage;
@@ -21,24 +21,24 @@ class GetMoreUserPosts extends PostEvent {
       {required this.userId, required this.page, required this.perPage});
 }
 
-class GetPosts extends PostEvent {
+class GetPosts extends UserPostEvent {
   final int page;
   final int perPage;
 
   GetPosts({required this.page, required this.perPage});
 }
 
-class GetMorePosts extends PostEvent {
+class GetMorePosts extends UserPostEvent {
   final int page;
   final int perPage;
 
   GetMorePosts({required this.page, required this.perPage});
 }
 
-class DeletePost extends PostEvent {
+class UserDeletePost extends UserPostEvent {
   final Post post;
 
-  DeletePost({
+  UserDeletePost({
     required this.post,
   });
 }

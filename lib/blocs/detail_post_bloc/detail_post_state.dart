@@ -1,26 +1,27 @@
 part of 'detail_post_bloc.dart';
 
-enum PostStatus {
+enum DetailPostStatus {
   initial,
   loading,
   success,
-  deleted,
+  deletedFromList,
+  deletedFromDetail,
   updated,
   error,
 }
 
 class DetailPostState {
   final Post? post;
-  final PostStatus status;
+  final DetailPostStatus status;
 
   DetailPostState({
     this.post,
-    this.status = PostStatus.initial,
+    this.status = DetailPostStatus.initial,
   });
 
   DetailPostState copyWith({
     Post? post,
-    PostStatus? status,
+    DetailPostStatus? status,
   }) {
     return DetailPostState(
       post: post ?? this.post,

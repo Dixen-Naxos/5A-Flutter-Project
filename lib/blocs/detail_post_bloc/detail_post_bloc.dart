@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -13,11 +15,12 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   DetailPostBloc({required this.postRepository}) : super(DetailPostState()) {
     on<GetPost>(_onGetPost);
     on<Delete>(_onDelete);
+    on<CreatePost>(_onPost);
   }
 
   void _onGetPost(event, emit) async {
     emit(
-      state.copyWith(status: PostStatus.loading),
+      state.copyWith(status: DetailPostStatus.loading),
     );
 
     try {
@@ -25,11 +28,11 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.postId,
       );
       emit(
-        state.copyWith(post: result, status: PostStatus.success),
+        state.copyWith(post: result, status: DetailPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: DetailPostStatus.error),
       );
 
       rethrow;
@@ -38,17 +41,47 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
 
   void _onDelete(Delete event, emit) async {
     emit(
-      state.copyWith(status: PostStatus.loading),
+      state.copyWith(status: DetailPostStatus.loading),
     );
 
     try {
       await postRepository.deletePost(event.post.id);
+      if (event.isInsideDetail) {
+        emit(
+          state.copyWith(
+              post: event.post, status: DetailPostStatus.deletedFromDetail),
+        );
+      } else {
+        emit(
+          state.copyWith(
+              post: event.post, status: DetailPostStatus.deletedFromList),
+        );
+      }
+    } catch (e) {
       emit(
-        state.copyWith(post: event.post, status: PostStatus.deleted),
+        state.copyWith(status: DetailPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onPost(CreatePost event, emit) async {
+    emit(
+      state.copyWith(status: DetailPostStatus.loading),
+    );
+
+    try {
+      await postRepository.createPost(
+        event.content,
+        event.image,
+      );
+      emit(
+        state.copyWith(status: DetailPostStatus.success),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: PostStatus.error),
+        state.copyWith(status: DetailPostStatus.error),
       );
 
       rethrow;

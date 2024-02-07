@@ -1,9 +1,9 @@
-import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../blocs/user_bloc/user_bloc.dart';
+import '../../blocs/user_post_bloc/user_post_bloc.dart';
 import '../list_widgets/posts_list_widget.dart';
 
 class UserPage extends StatefulWidget {
@@ -21,7 +21,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  late final _scrollController;
+  late final ScrollController _scrollController;
   final _scrollThreshold = 200.0;
 
   @override
@@ -87,14 +87,14 @@ class _UserPageState extends State<UserPage> {
                         color: Colors.redAccent,
                         thickness: 4,
                       ),
-                      BlocBuilder<PostBloc, PostState>(
+                      BlocBuilder<UserPostBloc, UserPostState>(
                         builder: (context, postState) {
-                          if (postState.status == PostStatus.loading) {
+                          if (postState.status == UserPostStatus.loading) {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
-                          if (postState.status == PostStatus.success) {
+                          if (postState.status == UserPostStatus.success) {
                             return PostsListWidget(
                                 onRefresh: _getPosts,
                                 scrollController: _scrollController,
@@ -125,7 +125,7 @@ class _UserPageState extends State<UserPage> {
   }
 
   Future<void> _getPosts() async {
-    final postBloc = BlocProvider.of<PostBloc>(context);
+    final postBloc = BlocProvider.of<UserPostBloc>(context);
     postBloc.add(
       GetUserPosts(userId: widget.userId, page: 1, perPage: 50),
     );
@@ -135,7 +135,7 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     super.initState();
     final userBloc = BlocProvider.of<UserBloc>(context);
-    final postBloc = BlocProvider.of<PostBloc>(context);
+    final postBloc = BlocProvider.of<UserPostBloc>(context);
     _scrollController = ScrollController();
     userBloc.add(
       GetUser(userId: widget.userId),
@@ -153,7 +153,7 @@ class _UserPageState extends State<UserPage> {
     }
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    final postBloc = BlocProvider.of<PostBloc>(context);
+    final postBloc = BlocProvider.of<UserPostBloc>(context);
     if (maxScroll - currentScroll <= _scrollThreshold) {
       postBloc.add(
         GetMoreUserPosts(

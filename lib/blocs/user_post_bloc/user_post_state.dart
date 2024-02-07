@@ -1,45 +1,45 @@
-part of 'post_bloc.dart';
+part of 'user_post_bloc.dart';
 
-enum PostStatus {
+enum UserPostStatus {
   initial,
   loading,
   success,
   error,
 }
 
-class PostState {
+class UserPostState {
   final ListPosts? posts;
-  final PostStatus status;
+  final UserPostStatus status;
   final bool scrollLoading;
 
-  const PostState({
+  const UserPostState({
     this.posts,
-    this.status = PostStatus.initial,
+    this.status = UserPostStatus.initial,
     this.scrollLoading = false,
   });
 
-  PostState lockScrollLoading() {
-    return PostState(
+  UserPostState lockScrollLoading() {
+    return UserPostState(
       posts: posts,
       status: status,
       scrollLoading: true,
     );
   }
 
-  PostState copyWith({
+  UserPostState copyWith({
     ListPosts? posts,
-    PostStatus? status,
+    UserPostStatus? status,
   }) {
-    return PostState(
+    return UserPostState(
       posts: posts ?? this.posts,
       status: status ?? this.status,
       scrollLoading: false,
     );
   }
 
-  PostState addPosts({
+  UserPostState addPosts({
     ListPosts? posts,
-    PostStatus? status,
+    UserPostStatus? status,
   }) {
     ListPosts newList = ListPosts(
       itemsReceived: posts!.itemsReceived,
@@ -52,19 +52,19 @@ class PostState {
       items: this.posts!.items..addAll(posts.items),
     );
 
-    return PostState(
+    return UserPostState(
       posts: newList,
       status: status ?? this.status,
       scrollLoading: false,
     );
   }
 
-  PostState removePosts({
+  UserPostState removePosts({
     required Post post,
-    PostStatus? status,
+    UserPostStatus? status,
   }) {
     posts!.items.remove(post);
-    return PostState(
+    return UserPostState(
       posts: posts,
       status: status ?? this.status,
       scrollLoading: false,

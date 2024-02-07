@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cinqa_flutter_project/models/list_posts.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/post.dart';
@@ -7,15 +10,19 @@ import '../api.dart';
 
 class PostApi extends PostDataSource {
   @override
-  Future<void> createPost(String content, String? image) async {
+  Future<void> createPost(String content, File? image) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       Api.dio.options.headers["Authorization"] =
           "Bearer ${prefs.get(("token"))}";
-      await Api.dio.post('/post', data: {
-        "content": content,
-        "image": image,
-      });
+      await Api.dio.post(
+        '/post',
+        data: FormData.fromMap({
+          "content": content,
+          "base_64_image":
+              image != null ? await MultipartFile.fromFile(image.path) : null,
+        }),
+      );
       return;
     } catch (e) {
       rethrow;

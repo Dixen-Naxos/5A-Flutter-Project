@@ -27,19 +27,19 @@ class _PostDetailPageState extends State<PostDetailPage> {
     return Scaffold(
       body: BlocListener<DetailPostBloc, DetailPostState>(
         listener: (context, detailPostState) {
-          if (detailPostState.status == PostStatus.deleted) {
+          if (detailPostState.status == DetailPostStatus.deletedFromDetail) {
             Navigator.pop(context);
           }
         },
         child: SafeArea(
           child: BlocBuilder<DetailPostBloc, DetailPostState>(
             builder: (context, state) {
-              if (state.status == PostStatus.loading) {
+              if (state.status == DetailPostStatus.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              if (state.status == PostStatus.success) {
+              if (state.status == DetailPostStatus.success) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,6 +68,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                               ),
                               DeleteButtonWidget(
                                 post: state.post!,
+                                isInsideDetail: true,
                               ),
                             ],
                           ),
@@ -103,7 +104,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   ],
                 );
               }
-              return const Placeholder();
+              return Container();
             },
           ),
         ),

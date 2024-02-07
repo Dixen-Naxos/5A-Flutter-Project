@@ -1,14 +1,17 @@
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
-import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/all_post_bloc/all_post_bloc.dart';
+import '../../blocs/user_post_bloc/user_post_bloc.dart';
 import '../../models/post.dart';
 
 class DeleteButtonWidget extends StatefulWidget {
-  const DeleteButtonWidget({super.key, required this.post});
+  const DeleteButtonWidget(
+      {super.key, required this.post, this.isInsideDetail = false});
 
   final Post post;
+  final bool isInsideDetail;
 
   @override
   State<DeleteButtonWidget> createState() => _DeleteButtonWidgetState();
@@ -29,12 +32,24 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
   _onDeleteButtonPressed() {
     final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
     detailPostBloc.add(
-      Delete(post: widget.post),
+      Delete(
+        post: widget.post,
+        isInsideDetail: widget.isInsideDetail,
+      ),
     );
 
-    final postBloc = BlocProvider.of<PostBloc>(context);
-    postBloc.add(
-      DeletePost(post: widget.post),
+    final allPostBloc = BlocProvider.of<AllPostBloc>(context);
+    allPostBloc.add(
+      AllDeletePost(
+        post: widget.post,
+      ),
+    );
+
+    final userPostBloc = BlocProvider.of<UserPostBloc>(context);
+    userPostBloc.add(
+      UserDeletePost(
+        post: widget.post,
+      ),
     );
   }
 }

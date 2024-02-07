@@ -2,6 +2,7 @@ import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
+import 'package:cinqa_flutter_project/widgets/pages/create_post_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/login_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/main_page.dart';
@@ -11,8 +12,9 @@ import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'blocs/post_bloc/post_bloc.dart';
+import 'blocs/all_post_bloc/all_post_bloc.dart';
 import 'blocs/user_bloc/user_bloc.dart';
+import 'blocs/user_post_bloc/user_post_bloc.dart';
 import 'datasources/api/auth_api/auth_api.dart';
 import 'datasources/api/post_api/post_api.dart';
 import 'datasources/api/user_api/user_api.dart';
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => PostBloc(
+            create: (context) => AllPostBloc(
               postRepository: context.read<PostRepository>(),
             ),
           ),
@@ -74,6 +76,7 @@ class MyApp extends StatelessWidget {
             SignupPage.routeName: (context) => const SignupPage(),
             LoginPage.routeName: (context) => const LoginPage(),
             MainPage.routeName: (context) => const MainPage(),
+            CreatePostPage.routeName: (context) => CreatePostPage(),
           },
           onGenerateRoute: (settings) {
             Widget content = const SizedBox();
@@ -88,7 +91,12 @@ class MyApp extends StatelessWidget {
               case UserPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = UserPage(userId: arguments);
+                  content = BlocProvider(
+                    create: (context) => UserPostBloc(
+                      postRepository: context.read<PostRepository>(),
+                    ),
+                    child: UserPage(userId: arguments),
+                  );
                 }
                 break;
             }

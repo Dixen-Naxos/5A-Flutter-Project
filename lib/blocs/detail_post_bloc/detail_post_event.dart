@@ -13,8 +13,20 @@ class GetPost extends DetailPostEvent {
 
 class Delete extends DetailPostEvent {
   final Post post;
+  final bool isInsideDetail;
 
   Delete({
     required this.post,
+    this.isInsideDetail = false,
+  });
+}
+
+class CreatePost extends DetailPostEvent {
+  final File? image;
+  final String content;
+
+  CreatePost({
+    required this.image,
+    required this.content,
   });
 }
