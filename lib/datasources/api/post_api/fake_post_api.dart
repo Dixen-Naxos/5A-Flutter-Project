@@ -24,6 +24,7 @@ class FakePostApi extends PostDataSource {
 
   @override
   Future<Post> getPost(int id) async {
+    await Future.delayed(const Duration(seconds: 5));
     try {
       final Map<String, dynamic> response = {
         "id": 1,
@@ -33,7 +34,6 @@ class FakePostApi extends PostDataSource {
           "name": "Dixen",
           "id": 1,
           "created_at": 4,
-          "email": "dixen@example.com",
         },
         "user_id": 1,
         "comments": [
@@ -45,7 +45,6 @@ class FakePostApi extends PostDataSource {
               "name": "Dixen",
               "id": 1,
               "created_at": 4,
-              "email": "dixen@example.com",
             }
           }
         ],
