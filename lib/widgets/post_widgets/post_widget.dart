@@ -1,7 +1,9 @@
 import 'package:cinqa_flutter_project/widgets/pages/post_detail_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../blocs/auth_bloc/auth_bloc.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
 
@@ -35,71 +37,102 @@ class PostWidget extends StatelessWidget {
                   size: 50,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    child: GestureDetector(
-                      onTap: () => _onProfileTap(context, realUser!.id),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            realUser!.name,
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Text(
-                              style: const TextStyle(
-                                  fontSize: 13, color: Colors.grey),
-                              timeSincePost.inDays > 0
-                                  ? "${timeSincePost.inDays}j"
-                                  : "${timeSincePost.inHours}h",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width - 75,
-                      child: Text(
-                        post.content,
-                      ),
-                    ),
-                  ),
-                  if (post.image != null)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: ConstrainedBox(
-                        constraints:
-                            const BoxConstraints(maxHeight: 200, maxWidth: 200),
-                        child: Image.network(post.image!.url),
-                      ),
-                    ),
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(right: 5),
-                        child: Icon(
-                          Icons.comment,
-                          color: Colors.grey,
-                          size: 15,
+                      padding: const EdgeInsets.only(bottom: 5),
+                      child: GestureDetector(
+                        onTap: () => _onProfileTap(context, realUser!.id),
+                        child: BlocBuilder<AuthBloc, AuthState>(
+                          builder: (context, authState) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              //mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  realUser!.name,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: Text(
+                                    style: const TextStyle(
+                                        fontSize: 13, color: Colors.grey),
+                                    timeSincePost.inDays > 0
+                                        ? "${timeSincePost.inDays}j"
+                                        : timeSincePost.inHours > 0
+                                            ? "${timeSincePost.inHours}h"
+                                            : timeSincePost.inMinutes > 0
+                                                ? "${timeSincePost.inMinutes}m"
+                                                : "${timeSincePost.inSeconds}s",
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(),
+                                ),
+                                if (authState.user?.id == realUser.id)
+                                  IconButton(
+                                    onPressed: () => {},
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                if (authState.user?.id == realUser.id)
+                                  IconButton(
+                                    onPressed: () => {},
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
                         ),
                       ),
-                      Text(
-                        "${post.commentCounts == 0 || post.commentCounts == null ? "Aucun commentaire" : post.commentCounts}",
-                        style:
-                            const TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width - 75,
+                        child: Text(
+                          post.content,
+                        ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    if (post.image != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(
+                              maxHeight: 200, maxWidth: 200),
+                          child: Image.network(post.image!.url),
+                        ),
+                      ),
+                    Row(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(right: 5),
+                          child: Icon(
+                            Icons.comment,
+                            color: Colors.grey,
+                            size: 15,
+                          ),
+                        ),
+                        Text(
+                          "${post.commentCounts == 0 || post.commentCounts == null ? "Aucun commentaire" : post.commentCounts}",
+                          style:
+                              const TextStyle(fontSize: 10, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
