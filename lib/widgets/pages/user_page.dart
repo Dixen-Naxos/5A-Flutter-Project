@@ -134,7 +134,7 @@ class _UserPageState extends State<UserPage> {
     );
 
     postBloc.add(
-      GetUserPosts(userId: widget.userId, page: 1, perPage: 100),
+      GetUserPosts(userId: widget.userId, page: 1, perPage: 50),
     );
   }
 
@@ -151,7 +151,7 @@ class _UserPageState extends State<UserPage> {
         GetMoreUserPosts(
           userId: widget.userId,
           page: nextPage,
-          perPage: 100,
+          perPage: 50,
         ),
       );
     }

@@ -141,9 +141,7 @@ class _MainPageState extends State<MainPage> {
       Connect(),
     );
 
-    postBloc.add(
-        GetPosts(page: 1, perPage: 100)
-    );
+    postBloc.add(GetPosts(page: 1, perPage: 15));
   }
 
   void _onScroll(int? nextPage) async {
@@ -153,11 +151,12 @@ class _MainPageState extends State<MainPage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     final postBloc = BlocProvider.of<PostBloc>(context);
-    if (maxScroll - currentScroll <= _scrollThreshold) {
+    if (maxScroll - currentScroll <= _scrollThreshold &&
+        !postBloc.state.scrollLoading) {
       postBloc.add(
         GetMorePosts(
           page: nextPage,
-          perPage: 100,
+          perPage: 15,
         ),
       );
     }

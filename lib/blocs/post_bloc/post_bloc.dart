@@ -41,6 +41,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   void _onGetMoreUserPosts(event, emit) async {
+    emit(
+      state.lockScrollLoading()
+    );
     try {
       final result = await postRepository.getUserPosts(
         event.userId,
@@ -84,9 +87,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   void _onGetMorePosts(event, emit) async {
     emit(
-      state.copyWith(status: PostStatus.scrollLoading),
+        state.lockScrollLoading()
     );
-
     try {
       final result = await postRepository.getPosts(
         event.page,

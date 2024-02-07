@@ -1,4 +1,5 @@
 import 'package:cinqa_flutter_project/widgets/comment_widgets/comment_widget.dart';
+import 'package:cinqa_flutter_project/widgets/list_widgets/comments_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,8 @@ class PostDetailPage extends StatefulWidget {
 }
 
 class _PostDetailPageState extends State<PostDetailPage> {
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +74,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                         ),
                     ],
                   ),
-                  CommentWidget(comment: state.post!.comments!.first)
+                  if (state.post?.comments != null)
+                    CommentsListWidget(
+                      comments: state.post!.comments!,
+                      scrollController: _scrollController,
+                    )
                 ],
               );
             }
