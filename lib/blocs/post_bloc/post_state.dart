@@ -5,17 +5,26 @@ enum PostStatus {
   loading,
   success,
   error,
-  scrollLoading,
 }
 
 class PostState {
   final ListPosts? posts;
   final PostStatus status;
+  final bool scrollLoading;
 
   const PostState({
     this.posts,
     this.status = PostStatus.initial,
+    this.scrollLoading = false,
   });
+
+  PostState lockScrollLoading() {
+    return PostState(
+      posts: posts,
+      status: status,
+      scrollLoading: true,
+    );
+  }
 
   PostState copyWith({
     ListPosts? posts,
@@ -24,6 +33,7 @@ class PostState {
     return PostState(
       posts: posts ?? this.posts,
       status: status ?? this.status,
+      scrollLoading: false,
     );
   }
 
@@ -45,6 +55,7 @@ class PostState {
     return PostState(
       posts: newList,
       status: status ?? this.status,
+      scrollLoading: false,
     );
   }
 }
