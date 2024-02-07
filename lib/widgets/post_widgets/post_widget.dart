@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/auth_bloc/auth_bloc.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
+import 'delete_button_widget.dart';
 
 class PostWidget extends StatelessWidget {
   PostWidget({super.key, required this.post, this.user});
@@ -83,12 +84,8 @@ class PostWidget extends StatelessWidget {
                                     ),
                                   ),
                                 if (authState.user?.id == realUser.id)
-                                  IconButton(
-                                    onPressed: () => {},
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    ),
+                                  DeleteButtonWidget(
+                                    post: post,
                                   ),
                               ],
                             );

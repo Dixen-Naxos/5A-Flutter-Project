@@ -25,18 +25,20 @@ class GetPosts extends PostEvent {
   final int page;
   final int perPage;
 
-  GetPosts({
-    required this.page,
-    required this.perPage
-  });
+  GetPosts({required this.page, required this.perPage});
 }
 
 class GetMorePosts extends PostEvent {
   final int page;
   final int perPage;
 
-  GetMorePosts({
-    required this.page,
-    required this.perPage
+  GetMorePosts({required this.page, required this.perPage});
+}
+
+class DeletePost extends PostEvent {
+  final Post post;
+
+  DeletePost({
+    required this.post,
   });
 }

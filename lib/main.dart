@@ -57,18 +57,23 @@ class MyApp extends StatelessWidget {
               userRepository: context.read<UserRepository>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => DetailPostBloc(
+              postRepository: context.read<PostRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => PostBloc(
+              postRepository: context.read<PostRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           routes: {
             HomePage.routeName: (context) => const HomePage(),
             SignupPage.routeName: (context) => const SignupPage(),
             LoginPage.routeName: (context) => const LoginPage(),
-            MainPage.routeName: (context) => BlocProvider(
-                  create: (context) => PostBloc(
-                    postRepository: context.read<PostRepository>(),
-                  ),
-                  child: const MainPage(),
-                ),
+            MainPage.routeName: (context) => const MainPage(),
           },
           onGenerateRoute: (settings) {
             Widget content = const SizedBox();
@@ -77,23 +82,13 @@ class MyApp extends StatelessWidget {
               case PostDetailPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = BlocProvider(
-                    create: (context) => DetailPostBloc(
-                      postRepository: context.read<PostRepository>(),
-                    ),
-                    child: PostDetailPage(postId: arguments),
-                  );
+                  content = PostDetailPage(postId: arguments);
                 }
                 break;
               case UserPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = BlocProvider(
-                    create: (context) => PostBloc(
-                      postRepository: context.read<PostRepository>(),
-                    ),
-                    child: UserPage(userId: arguments),
-                  );
+                  content = UserPage(userId: arguments);
                 }
                 break;
             }

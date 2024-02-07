@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import '../../datasources/repository/post_repository.dart';
 import '../../models/list_posts.dart';
+import '../../models/post.dart';
 
 part 'post_event.dart';
 part 'post_state.dart';
@@ -15,6 +16,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<GetMoreUserPosts>(_onGetMoreUserPosts);
     on<GetPosts>(_onGetPosts);
     on<GetMorePosts>(_onGetMorePosts);
+    on<DeletePost>(_onDelete);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -41,9 +43,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   void _onGetMoreUserPosts(event, emit) async {
-    emit(
-      state.lockScrollLoading()
-    );
+    emit(state.lockScrollLoading());
     try {
       final result = await postRepository.getUserPosts(
         event.userId,
@@ -86,9 +86,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   void _onGetMorePosts(event, emit) async {
-    emit(
-        state.lockScrollLoading()
-    );
+    emit(state.lockScrollLoading());
     try {
       final result = await postRepository.getPosts(
         event.page,
@@ -97,6 +95,20 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
       emit(
         state.addPosts(posts: result, status: PostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: PostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onDelete(event, emit) async {
+    try {
+      emit(
+        state.removePosts(post: event.post, status: PostStatus.success),
       );
     } catch (e) {
       emit(

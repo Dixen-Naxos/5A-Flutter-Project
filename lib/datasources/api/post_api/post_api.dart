@@ -1,4 +1,5 @@
 import 'package:cinqa_flutter_project/models/list_posts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/post.dart';
 import '../../datasources/post_datasource.dart';
@@ -8,8 +9,10 @@ class PostApi extends PostDataSource {
   @override
   Future<void> createPost(String content, String? image) async {
     try {
-      Api.dio.options.headers["Authorization"] = "Bearer token";
-      final response = await Api.dio.post('/post', data: {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      Api.dio.options.headers["Authorization"] =
+          "Bearer ${prefs.get(("token"))}";
+      await Api.dio.post('/post', data: {
         "content": content,
         "image": image,
       });
@@ -22,8 +25,10 @@ class PostApi extends PostDataSource {
   @override
   Future<void> deletePost(int id) async {
     try {
-      Api.dio.options.headers["Authorization"] = "Bearer token";
-      final response = await Api.dio.delete('/post/$id');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      Api.dio.options.headers["Authorization"] =
+          "Bearer ${prefs.get(("token"))}";
+      await Api.dio.delete('/post/$id');
       return;
     } catch (e) {
       rethrow;
@@ -56,7 +61,9 @@ class PostApi extends PostDataSource {
   @override
   Future<Post> patchPost(int id, String? content, String? image) async {
     try {
-      Api.dio.options.headers["Authorization"] = "Bearer token";
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      Api.dio.options.headers["Authorization"] =
+          "Bearer ${prefs.get(("token"))}";
       final response = await Api.dio.patch('/post/$id', data: {
         "content": content,
         "image": image,

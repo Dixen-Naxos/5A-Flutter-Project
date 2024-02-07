@@ -10,3 +10,11 @@ class GetPost extends DetailPostEvent {
     required this.postId,
   });
 }
+
+class Delete extends DetailPostEvent {
+  final Post post;
+
+  Delete({
+    required this.post,
+  });
+}

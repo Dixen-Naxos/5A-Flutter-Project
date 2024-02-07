@@ -34,10 +34,10 @@ class PostsListWidget extends StatelessWidget {
             );
           }
           return null;
-        }, separatorBuilder: (BuildContext context, int index) {
+        },
+        separatorBuilder: (BuildContext context, int index) {
           return const Divider();
-      },
-
+        },
       ),
     );
   }

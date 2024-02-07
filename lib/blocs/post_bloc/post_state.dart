@@ -58,4 +58,16 @@ class PostState {
       scrollLoading: false,
     );
   }
+
+  PostState removePosts({
+    required Post post,
+    PostStatus? status,
+  }) {
+    posts!.items.remove(post);
+    return PostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
 }
