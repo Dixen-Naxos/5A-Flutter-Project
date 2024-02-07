@@ -1,6 +1,13 @@
 part of 'auth_bloc.dart';
 
-enum AuthStatus { initial, loading, success, error, disconnected, connect }
+enum AuthStatus {
+  initial,
+  loading,
+  success,
+  error,
+  disconnected,
+  connect,
+}
 
 class AuthState {
   final User? user;
