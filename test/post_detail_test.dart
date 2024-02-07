@@ -2,11 +2,8 @@ import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
-import 'package:cinqa_flutter_project/datasources/api/auth_api/error_auth_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/fake_auth_api.dart';
-import 'package:cinqa_flutter_project/datasources/api/post_api/error_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/post_api/fake_post_api.dart';
-import 'package:cinqa_flutter_project/datasources/api/user_api/error_user_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/user_api/fake_user_api.dart';
 import 'package:cinqa_flutter_project/datasources/datasources/auth_datasource.dart';
 import 'package:cinqa_flutter_project/datasources/datasources/post_datasource.dart';
@@ -15,15 +12,18 @@ import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dar
 import 'package:cinqa_flutter_project/datasources/repository/post_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
 import 'package:cinqa_flutter_project/widgets/pages/main_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/post_detail_page.dart';
+import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
+import 'package:cinqa_flutter_project/widgets/post_widgets/post_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Widget _setUpMainPage(
-  PostDataSource postDataSource,
-  UserDataSource userDatasource,
-  AuthDataSource authDataSource,
-) {
+    PostDataSource postDataSource,
+    UserDataSource userDatasource,
+    AuthDataSource authDataSource,
+    ) {
   return MultiRepositoryProvider(
     providers: [
       RepositoryProvider(
@@ -73,59 +73,5 @@ Widget _setUpMainPage(
 }
 
 void main() {
-  group('$MainPage', () {
-    testWidgets('$MainPage should display the right title',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(_setUpMainPage(
-        FakePostApi(),
-        FakeUserApi(),
-        FakeAuthApi(),
-      ));
-      await tester.pump(const Duration(seconds: 6));
-      expect(find.byIcon(Icons.house), findsOneWidget);
-    });
-
-    testWidgets('$MainPage should display an error if an error occurred',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(_setUpMainPage(
-        ErrorPostApi(),
-        ErrorUserApi(),
-        ErrorAuthApi(),
-      ));
-      await tester.pump(const Duration(seconds: 3));
-      expect(find.text('Oups, une erreur est survenue.'), findsOneWidget);
-    });
-
-    testWidgets('$MainPage should display a loading indicator',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(_setUpMainPage(
-        FakePostApi(),
-        FakeUserApi(),
-        FakeAuthApi(),
-      ));
-      await tester.pump(const Duration(seconds: 3));
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 3));
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-    });
-
-    /// Ne passe pas car état vide non géré.
-    // testWidgets('$ProductsScreen should display a specific message when empty result', (WidgetTester tester) async {
-    //   await tester.pumpWidget(_setUpProductsScreen(EmptyDataSource()));
-    //   await tester.pump(const Duration(seconds: 3));
-    //   expect(find.text('Aucun produit'), findsOneWidget);
-    // });
-
-    testWidgets('$MainPage should display a loader when Loading',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(_setUpMainPage(
-        FakePostApi(),
-        FakeUserApi(),
-        FakeAuthApi(),
-      ));
-      await tester.pump(const Duration(seconds: 3));
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pumpAndSettle();
-    });
-  });
+  group('$PostDetailPage', () {});
 }
