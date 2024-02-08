@@ -6,15 +6,16 @@ import '../api.dart';
 
 class CommentApi extends CommentDataSource {
   @override
-  Future<void> createComment(String content) async {
+  Future<Comment> createComment(String content, int postId) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       Api.dio.options.headers["Authorization"] =
           "Bearer ${prefs.get(("token"))}";
-      await Api.dio.patch('/comment', data: {
+      final result = await Api.dio.post('/comment', data: {
+        "post_id": postId,
         "content": content,
       });
-      return;
+      return Comment.fromJson(result.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;
     }

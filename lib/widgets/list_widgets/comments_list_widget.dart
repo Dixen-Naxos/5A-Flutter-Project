@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../global_widgets/separator_widget.dart';
 
-
 class CommentsListWidget extends StatelessWidget {
   const CommentsListWidget({
     super.key,
@@ -18,6 +17,7 @@ class CommentsListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 3,
       child: ListView.separated(
         controller: scrollController,
         itemCount: comments.length,

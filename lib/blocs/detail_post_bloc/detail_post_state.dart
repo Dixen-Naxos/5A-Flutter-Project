@@ -29,4 +29,44 @@ class DetailPostState {
       status: status ?? this.status,
     );
   }
+
+  DetailPostState addComment({
+    required Post post,
+    required Comment comment,
+    DetailPostStatus? status,
+  }) {
+    post.comments.insert(0, comment);
+    return DetailPostState(
+      post: post,
+      status: status ?? this.status,
+    );
+  }
+
+  DetailPostState patchComment({
+    required Post post,
+    required Comment comment,
+    DetailPostStatus? status,
+  }) {
+    for (int i = 0; i < post.comments.length; i++) {
+      if (post.comments[i].id == comment.id) {
+        post.comments[i] = comment;
+      }
+    }
+    return DetailPostState(
+      post: post,
+      status: status ?? this.status,
+    );
+  }
+
+  DetailPostState deleteComment({
+    required Post post,
+    required Comment comment,
+    DetailPostStatus? status,
+  }) {
+    post.comments.remove(comment);
+    return DetailPostState(
+      post: post,
+      status: status ?? this.status,
+    );
+  }
 }

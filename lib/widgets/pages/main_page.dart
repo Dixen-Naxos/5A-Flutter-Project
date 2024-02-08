@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth_bloc/auth_bloc.dart';
 import '../../models/user.dart';
+import 'create_post_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -116,7 +117,9 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
-      floatingActionButton: const NewPostButtonWidget(),
+      floatingActionButton: NewPostButtonWidget(
+        onFloatingButtonPressed: _onFloatingButtonPressed,
+      ),
     );
   }
 
@@ -174,5 +177,9 @@ class _MainPageState extends State<MainPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onFloatingButtonPressed() {
+    CreatePostPage.navigateTo(context);
   }
 }

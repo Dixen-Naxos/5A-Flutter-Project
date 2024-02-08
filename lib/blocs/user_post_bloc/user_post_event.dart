@@ -50,3 +50,19 @@ class UserPatchPost extends UserPostEvent {
     required this.post,
   });
 }
+
+class UserPostAddCommentCount extends UserPostEvent {
+  final Post post;
+
+  UserPostAddCommentCount({
+    required this.post,
+  });
+}
+
+class UserPostSubstractCommentCount extends UserPostEvent {
+  final Post post;
+
+  UserPostSubstractCommentCount({
+    required this.post,
+  });
+}

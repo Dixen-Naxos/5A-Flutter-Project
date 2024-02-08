@@ -42,3 +42,33 @@ class PatchPost extends DetailPostEvent {
     required this.id,
   });
 }
+
+class AddComment extends DetailPostEvent {
+  final Comment comment;
+  final Post post;
+
+  AddComment({
+    required this.comment,
+    required this.post,
+  });
+}
+
+class UpdateComment extends DetailPostEvent {
+  final Comment comment;
+  final Post post;
+
+  UpdateComment({
+    required this.comment,
+    required this.post,
+  });
+}
+
+class RemoveComment extends DetailPostEvent {
+  final Comment comment;
+  final Post post;
+
+  RemoveComment({
+    required this.comment,
+    required this.post,
+  });
+}

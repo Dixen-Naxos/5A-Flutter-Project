@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../datasources/repository/post_repository.dart';
+import '../../models/comment.dart';
 import '../../models/post.dart';
 
 part 'detail_post_event.dart';
@@ -17,6 +18,9 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
     on<Delete>(_onDelete);
     on<CreatePost>(_onPost);
     on<PatchPost>(_onPatch);
+    on<AddComment>(_onAddComment);
+    on<UpdateComment>(_onPatchComment);
+    on<RemoveComment>(_onDeleteComment);
   }
 
   void _onGetPost(event, emit) async {
@@ -106,6 +110,48 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
       );
       emit(
         state.copyWith(post: result2, status: DetailPostStatus.patched),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: DetailPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onAddComment(AddComment event, emit) {
+    try {
+      emit(
+        state.addComment(post: event.post, comment: event.comment),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: DetailPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onPatchComment(UpdateComment event, emit) {
+    try {
+      emit(
+        state.patchComment(post: event.post, comment: event.comment),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: DetailPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onDeleteComment(RemoveComment event, emit) {
+    try {
+      emit(
+        state.deleteComment(post: event.post, comment: event.comment),
       );
     } catch (e) {
       emit(

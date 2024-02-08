@@ -4,7 +4,7 @@ class Comment {
   final int id;
   final int createdAt;
   final String content;
-  final User author;
+  User? author;
 
   Comment({
     required this.id,
@@ -18,7 +18,7 @@ class Comment {
       id: json["id"],
       createdAt: json["created_at"],
       content: json["content"],
-      author: User.fromJson(json["author"]),
+      author: json["author"] != null ? User.fromJson(json["author"]) : null,
     );
   }
 

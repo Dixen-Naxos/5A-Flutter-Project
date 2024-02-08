@@ -16,8 +16,7 @@ class CommentRepository {
     return commentDataSource.patchComment(id, content);
   }
 
-  Future<void> createComment(String content) async {
-    return commentDataSource.createComment(content);
+  Future<Comment> createComment(String content, int postId) async {
+    return commentDataSource.createComment(content, postId);
   }
-
 }

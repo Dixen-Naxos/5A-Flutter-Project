@@ -75,147 +75,150 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
-                        child: GestureDetector(
-                          onTap: () => _onProfileTap(context, realUser!.id),
-                          child: BlocBuilder<AuthBloc, AuthState>(
-                            builder: (context, authState) {
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                //mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    realUser!.name,
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: GestureDetector(
+                            onTap: () => _onProfileTap(context, realUser.id),
+                            child: BlocBuilder<AuthBloc, AuthState>(
+                              builder: (context, authState) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  //mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      realUser.name,
                                       style: const TextStyle(
-                                          fontSize: 13, color: Colors.grey),
-                                      timeSincePost.inDays > 0
-                                          ? "${timeSincePost.inDays}j"
-                                          : timeSincePost.inHours > 0
-                                              ? "${timeSincePost.inHours}h"
-                                              : timeSincePost.inMinutes > 0
-                                                  ? "${timeSincePost.inMinutes}m"
-                                                  : "${timeSincePost.inSeconds}s",
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(),
-                                  ),
-                                  if (authState.user?.id == realUser.id)
-                                    isEditing == false
-                                        ? IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                isEditing = true;
-                                                contentController.text =
-                                                    widget.post.content;
-                                              });
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: Colors.black,
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Text(
+                                        style: const TextStyle(
+                                            fontSize: 13, color: Colors.grey),
+                                        timeSincePost.inDays > 0
+                                            ? "${timeSincePost.inDays}j"
+                                            : timeSincePost.inHours > 0
+                                                ? "${timeSincePost.inHours}h"
+                                                : timeSincePost.inMinutes > 0
+                                                    ? "${timeSincePost.inMinutes}m"
+                                                    : "${timeSincePost.inSeconds}s",
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(),
+                                    ),
+                                    if (authState.user?.id == realUser.id)
+                                      isEditing == false
+                                          ? IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isEditing = true;
+                                                  contentController.text =
+                                                      widget.post.content;
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: Colors.black,
+                                              ),
+                                            )
+                                          : IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  isEditing = false;
+                                                  image = null;
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.cancel,
+                                                color: Colors.black,
+                                              ),
                                             ),
-                                          )
-                                        : IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                isEditing = false;
-                                                image = null;
-                                              });
-                                            },
-                                            icon: const Icon(
-                                              Icons.cancel,
-                                              color: Colors.black,
+                                    if (authState.user?.id == realUser.id)
+                                      isEditing == false
+                                          ? DeleteButtonWidget(
+                                              post: widget.post,
+                                            )
+                                          : IconButton(
+                                              onPressed: _onSave,
+                                              icon: const Icon(
+                                                Icons.save,
+                                                color: Colors.black,
+                                              ),
                                             ),
-                                          ),
-                                  if (authState.user?.id == realUser.id)
-                                    isEditing == false
-                                        ? DeleteButtonWidget(
-                                            post: widget.post,
-                                          )
-                                        : IconButton(
-                                            onPressed: _onSave,
-                                            icon: const Icon(
-                                              Icons.save,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                ],
-                              );
-                            },
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width - 75,
-                          child: !isEditing
-                              ? Text(
-                                  widget.post.content,
-                                )
-                              : InputField(
-                                  hintText: "Ecrivez ici...",
-                                  controller: contentController,
-                                  multiline: true,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width - 75,
+                            child: !isEditing
+                                ? Text(
+                                    widget.post.content,
+                                  )
+                                : InputField(
+                                    hintText: "Ecrivez ici...",
+                                    controller: contentController,
+                                    multiline: true,
+                                  ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            if (widget.post.image != null && image == null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                      maxHeight: 200, maxWidth: 200),
+                                  child: Image.network(widget.post.image!.url),
                                 ),
+                              ),
+                            if (image != null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                      maxHeight: 200, maxWidth: 200),
+                                  child: Image.file(image!),
+                                ),
+                              ),
+                            if (isEditing)
+                              IconButton(
+                                onPressed: _onOpenImage,
+                                icon: const Icon(Icons.link),
+                              ),
+                          ],
                         ),
-                      ),
-                      Row(
-                        children: [
-                          if (widget.post.image != null && image == null)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                    maxHeight: 200, maxWidth: 200),
-                                child: Image.network(widget.post.image!.url),
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(right: 5),
+                              child: Icon(
+                                Icons.comment,
+                                color: Colors.grey,
+                                size: 15,
                               ),
                             ),
-                          if (image != null)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                    maxHeight: 200, maxWidth: 200),
-                                child: Image.file(image!),
-                              ),
+                            Text(
+                              "${widget.post.commentCounts == 0 || widget.post.commentCounts == null ? "Aucun commentaire" : widget.post.commentCounts}",
+                              style: const TextStyle(
+                                  fontSize: 10, color: Colors.grey),
                             ),
-                          if (isEditing)
-                            IconButton(
-                              onPressed: _onOpenImage,
-                              icon: const Icon(Icons.link),
-                            ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(right: 5),
-                            child: Icon(
-                              Icons.comment,
-                              color: Colors.grey,
-                              size: 15,
-                            ),
-                          ),
-                          Text(
-                            "${widget.post.commentCounts == 0 || widget.post.commentCounts == null ? "Aucun commentaire" : widget.post.commentCounts}",
-                            style: const TextStyle(
-                                fontSize: 10, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -1,6 +1,8 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
+import 'package:cinqa_flutter_project/datasources/api/comment_api/comment_api.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
+import 'package:cinqa_flutter_project/datasources/repository/comment_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
 import 'package:cinqa_flutter_project/widgets/pages/create_post_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/all_post_bloc/all_post_bloc.dart';
+import 'blocs/comment_bloc/comment_bloc.dart';
 import 'blocs/user_bloc/user_bloc.dart';
 import 'blocs/user_post_bloc/user_post_bloc.dart';
 import 'datasources/api/auth_api/auth_api.dart';
@@ -44,6 +47,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => PostRepository(
             postDataSource: PostApi(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) => CommentRepository(
+            commentDataSource: CommentApi(),
           ),
         ),
       ],
@@ -90,7 +98,12 @@ class MyApp extends StatelessWidget {
               case PostDetailPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = PostDetailPage(postId: arguments);
+                  content = BlocProvider(
+                    create: (context) => CommentBloc(
+                      commentRepository: context.read<CommentRepository>(),
+                    ),
+                    child: PostDetailPage(postId: arguments),
+                  );
                 }
                 break;
               case UserPage.routeName:

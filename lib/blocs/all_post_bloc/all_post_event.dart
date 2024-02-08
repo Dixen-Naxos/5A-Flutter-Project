@@ -50,3 +50,19 @@ class AllPatchPost extends AllPostEvent {
     required this.post,
   });
 }
+
+class AllPostAddCommentCount extends AllPostEvent {
+  final Post post;
+
+  AllPostAddCommentCount({
+    required this.post,
+  });
+}
+
+class AllPostSubstractCommentCount extends AllPostEvent {
+  final Post post;
+
+  AllPostSubstractCommentCount({
+    required this.post,
+  });
+}

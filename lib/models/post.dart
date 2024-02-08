@@ -8,7 +8,7 @@ class Post {
   final String content;
   User? author;
   final int? userId;
-  List<Comment>? comments;
+  List<Comment> comments;
   int? commentCounts;
   final Image? image;
 
@@ -18,7 +18,7 @@ class Post {
     required this.content,
     this.author,
     this.userId,
-    this.comments,
+    this.comments = const [],
     this.commentCounts,
     this.image,
   });

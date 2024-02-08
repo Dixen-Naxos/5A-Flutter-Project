@@ -18,6 +18,8 @@ class AllPostBloc extends Bloc<AllPostEvent, AllPostState> {
     on<GetMorePosts>(_onGetMorePosts);
     on<AllDeletePost>(_onDelete);
     on<AllPatchPost>(_onPatch);
+    on<AllPostAddCommentCount>(_onAddComment);
+    on<AllPostSubstractCommentCount>(_onRemoveComment);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -124,6 +126,38 @@ class AllPostBloc extends Bloc<AllPostEvent, AllPostState> {
     try {
       emit(
         state.patchPosts(post: event.post, status: AllPostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: AllPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onAddComment(AllPostAddCommentCount event, emit) {
+    try {
+      emit(
+        state.createCommentFromPost(
+          post: event.post,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: AllPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onRemoveComment(AllPostSubstractCommentCount event, emit) {
+    try {
+      emit(
+        state.deleteCommentFromPost(
+          post: event.post,
+        ),
       );
     } catch (e) {
       emit(

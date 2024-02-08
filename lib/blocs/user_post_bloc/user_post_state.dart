@@ -91,4 +91,43 @@ class UserPostState {
       scrollLoading: false,
     );
   }
+
+  UserPostState deleteCommentFromPost({
+    required Post post,
+    UserPostStatus? status,
+  }) {
+    if (posts != null) {
+      for (int i = 0; i < posts!.items.length; i++) {
+        if (posts!.items[i].id == post.id) {
+          posts!.items[i].commentCounts = posts!.items[i].commentCounts! - 1;
+          break;
+        }
+      }
+    }
+
+    return UserPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
+
+  UserPostState createCommentFromPost({
+    required Post post,
+    UserPostStatus? status,
+  }) {
+    if (posts != null) {
+      for (int i = 0; i < posts!.items.length; i++) {
+        if (posts!.items[i].id == post.id) {
+          posts!.items[i].commentCounts = posts!.items[i].commentCounts! + 1;
+          break;
+        }
+      }
+    }
+    return UserPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
 }

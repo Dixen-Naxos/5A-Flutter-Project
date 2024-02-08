@@ -89,4 +89,38 @@ class AllPostState {
       scrollLoading: false,
     );
   }
+
+  AllPostState deleteCommentFromPost({
+    required Post post,
+    AllPostStatus? status,
+  }) {
+    for (int i = 0; i < posts!.items.length; i++) {
+      if (posts!.items[i].id == post.id) {
+        posts!.items[i].commentCounts = posts!.items[i].commentCounts! - 1;
+        break;
+      }
+    }
+    return AllPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
+
+  AllPostState createCommentFromPost({
+    required Post post,
+    AllPostStatus? status,
+  }) {
+    for (int i = 0; i < posts!.items.length; i++) {
+      if (posts!.items[i].id == post.id) {
+        posts!.items[i].commentCounts = posts!.items[i].commentCounts! + 1;
+        break;
+      }
+    }
+    return AllPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
 }

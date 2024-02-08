@@ -5,7 +5,6 @@ import '../../../models/post.dart';
 import '../../datasources/post_datasource.dart';
 
 class EmptyPostApi extends PostDataSource {
-
   @override
   Future<void> deletePost(int id) async {
     await Future.delayed(const Duration(seconds: 3));
@@ -34,7 +33,7 @@ class EmptyPostApi extends PostDataSource {
   }
 
   @override
-  Future<Post> patchPost(int id, String? content, String? image) async {
+  Future<Post> patchPost(int id, String? content, File? image) async {
     await Future.delayed(const Duration(seconds: 3));
     throw UnimplementedError();
   }

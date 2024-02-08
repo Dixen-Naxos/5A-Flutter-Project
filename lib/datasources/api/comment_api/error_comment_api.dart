@@ -4,7 +4,7 @@ import '../../datasources/comment_datasource.dart';
 
 class ErrorCommentApi extends CommentDataSource {
   @override
-  Future<void> createComment(String content) async {
+  Future<Comment> createComment(String content, int postId) async {
     await Future.delayed(const Duration(seconds: 3));
     throw Exception();
   }
