@@ -107,7 +107,7 @@ class _UserPageState extends State<UserPage> {
                                   user: userState.user);
                             }
                             return const Center(
-                              child: Text("Rien a voir ici"),
+                              child: Text("Aucun post"),
                             );
                           }
                           return const Placeholder();

@@ -345,7 +345,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     if (detailPostBloc.state.post!.comments.isEmpty) {
       return const Expanded(
         child: Center(
-          child: Text("Rien à voir ici"),
+          child: Text("Aucun commentaire"),
         ),
       );
     } else {

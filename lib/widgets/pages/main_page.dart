@@ -108,7 +108,7 @@ class _MainPageState extends State<MainPage> {
                               );
                             }
                             return const Center(
-                              child: Text("Rien a voir ici"),
+                              child: Text("Aucun post"),
                             );
                           }
                           return Container();
