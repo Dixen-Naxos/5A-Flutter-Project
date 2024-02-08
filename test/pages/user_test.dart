@@ -1,6 +1,6 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
-import 'package:cinqa_flutter_project/blocs/post_bloc/post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/datasources/auth_datasource.dart';
 import 'package:cinqa_flutter_project/datasources/datasources/post_datasource.dart';
@@ -54,7 +54,7 @@ Widget _setUpMainPage(
           ),
         ),
         BlocProvider(
-          create: (context) => PostBloc(
+          create: (context) => AllPostBloc(
             postRepository: context.read<PostRepository>(),
           ),
         ),
