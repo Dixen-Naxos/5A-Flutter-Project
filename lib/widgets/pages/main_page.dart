@@ -76,7 +76,7 @@ class _MainPageState extends State<MainPage> {
                                   _onHouseClic(context, state.user!.id),
                               icon: Icon(
                                 Icons.house,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).hintColor,
                               ),
                             ),
                           Expanded(
@@ -85,16 +85,16 @@ class _MainPageState extends State<MainPage> {
                           state.status == AuthStatus.connect
                               ? IconButton(
                                   onPressed: () => _onDisconnectClic(context),
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.exit_to_app,
-                                    color: Colors.black,
+                                    color: Theme.of(context).hintColor,
                                   ),
                                 )
                               : IconButton(
                                   onPressed: () => _onConnectClic(context),
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.accessible,
-                                    color: Colors.black,
+                                    color: Theme.of(context).indicatorColor,
                                   ),
                                 ),
                         ],
@@ -118,8 +118,12 @@ class _MainPageState extends State<MainPage> {
                                         : null),
                               );
                             }
-                            return const Center(
-                              child: Text("Aucun post"),
+                            return Center(
+                              child: Text(
+                                "Aucun post",
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
+                              ),
                             );
                           }
                           return Container();

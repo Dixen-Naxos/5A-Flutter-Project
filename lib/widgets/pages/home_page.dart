@@ -23,15 +23,12 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
+             Padding(
+              padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
                   "Touiteur",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
             ),
@@ -60,26 +57,26 @@ class _HomePageState extends State<HomePage> {
                       onTap: () => _onLogInClick(context),
                       text: "Se connecter",
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
                         children: [
                           Expanded(
                             child: Divider(
-                              color: Colors.grey,
+                              color: Theme.of(context).dividerColor,
                               thickness: 1,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Text(
                               "ou",
-                              style: TextStyle(color: Colors.grey),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
                           Expanded(
                             child: Divider(
-                              color: Colors.grey,
+                              color: Theme.of(context).dividerColor,
                               thickness: 1,
                             ),
                           ),

@@ -12,8 +12,11 @@ class NewPostButtonWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      child: const Icon(Icons.add),
+      backgroundColor: Theme.of(context).primaryColor,
+      child: Icon(
+        Icons.add,
+        color: Theme.of(context).hintColor,
+      ),
     );
   }
 }

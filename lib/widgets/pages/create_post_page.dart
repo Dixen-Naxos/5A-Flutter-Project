@@ -71,17 +71,17 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         child: ElevatedButton(
                           onPressed: _onResetImage,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
+                            backgroundColor: Theme.of(context).primaryColor,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(100),
                               ),
                             ),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Icon(
                               Icons.close,
-                              color: Colors.redAccent,
+                              color: Theme.of(context).colorScheme.error,
                             ),
                           ),
                         ),

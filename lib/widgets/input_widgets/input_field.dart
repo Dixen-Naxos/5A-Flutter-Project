@@ -20,15 +20,15 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.grey,
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(15.0),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.black,
+          borderSide: BorderSide(
+            color: Theme.of(context).focusColor,
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(15.0),

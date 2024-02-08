@@ -147,9 +147,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                                           .post!.content;
                                                 });
                                               },
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.edit,
-                                                color: Colors.black,
+                                                color: Theme.of(context).hintColor,
                                               ),
                                             )
                                           : IconButton(
@@ -159,9 +159,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                                   image = null;
                                                 });
                                               },
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.cancel,
-                                                color: Colors.black,
+                                                color: Theme.of(context).hintColor,
                                               ),
                                             ),
                                     if (authState.user?.id ==
@@ -172,9 +172,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                             )
                                           : IconButton(
                                               onPressed: _onSave,
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.save,
-                                                color: Colors.black,
+                                                color: Theme.of(context).hintColor,
                                               ),
                                             ),
                                   ],
@@ -260,9 +260,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                     padding: const EdgeInsets.only(top: 5),
                                     child: IconButton(
                                       onPressed: _onPostCommentClic,
-                                      icon: const Icon(
+                                      icon: Icon(
                                         Icons.send,
-                                        color: Colors.black,
+                                        color: Theme.of(context).hintColor,
                                         size: 32,
                                       ),
                                     ),

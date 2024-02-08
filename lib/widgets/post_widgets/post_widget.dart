@@ -61,7 +61,7 @@ class _PostWidgetState extends State<PostWidget> {
       child: GestureDetector(
         onTap: () => _onPostTap(context),
         child: Container(
-          decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
+          decoration: BoxDecoration(color: Theme.of(context).cardColor),
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Row(
@@ -92,15 +92,15 @@ class _PostWidgetState extends State<PostWidget> {
                                   children: [
                                     Text(
                                       realUser.name,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 5),
                                       child: Text(
-                                        style: const TextStyle(
-                                            fontSize: 13, color: Colors.grey),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
                                         timeSincePost.inDays > 0
                                             ? "${timeSincePost.inDays}j"
                                             : timeSincePost.inHours > 0
@@ -125,7 +125,7 @@ class _PostWidgetState extends State<PostWidget> {
                                               },
                                               icon: Icon(
                                                 Icons.edit,
-                                                color: Theme.of(context).colorScheme.shadow,
+                                                color: Theme.of(context).hintColor,
                                               ),
                                             )
                                           : IconButton(
@@ -149,7 +149,9 @@ class _PostWidgetState extends State<PostWidget> {
                                               onPressed: _onSave,
                                               icon: Icon(
                                                 Icons.save,
-                                                color: Theme.of(context).colorScheme.shadow,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .shadow,
                                               ),
                                             ),
                                   ],
@@ -180,7 +182,9 @@ class _PostWidgetState extends State<PostWidget> {
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: ConstrainedBox(
                                   constraints: const BoxConstraints(
-                                      maxHeight: 200, maxWidth: 200),
+                                    maxHeight: 200,
+                                    maxWidth: 200,
+                                  ),
                                   child: Image.network(widget.post.image!.url),
                                 ),
                               ),
@@ -189,7 +193,9 @@ class _PostWidgetState extends State<PostWidget> {
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: ConstrainedBox(
                                   constraints: const BoxConstraints(
-                                      maxHeight: 200, maxWidth: 200),
+                                    maxHeight: 200,
+                                    maxWidth: 200,
+                                  ),
                                   child: Image.file(image!),
                                 ),
                               ),
@@ -212,8 +218,7 @@ class _PostWidgetState extends State<PostWidget> {
                             ),
                             Text(
                               "${widget.post.commentCounts == 0 || widget.post.commentCounts == null ? "Aucun commentaire" : widget.post.commentCounts}",
-                              style: const TextStyle(
-                                  fontSize: 10, color: Colors.grey),
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),

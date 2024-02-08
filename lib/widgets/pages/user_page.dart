@@ -117,8 +117,12 @@ class _UserPageState extends State<UserPage> {
                                             : null),
                                     user: userState.user);
                               }
-                              return const Center(
-                                child: Text("Aucun post"),
+                              return Center(
+                                child: Text(
+                                  "Aucun post",
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium,
+                                ),
                               );
                             }
                             return const Placeholder();

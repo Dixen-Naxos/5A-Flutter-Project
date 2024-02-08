@@ -56,17 +56,12 @@ class _CommentWidgetState extends State<CommentWidget> {
                             children: [
                               Text(
                                 widget.comment.author!.name,
-                                style: const TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   timeSinceComment.inDays > 0
                                       ? "${timeSinceComment.inDays}j"
                                       : timeSinceComment.inHours > 0

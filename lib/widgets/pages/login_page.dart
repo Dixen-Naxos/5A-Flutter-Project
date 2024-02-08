@@ -60,13 +60,12 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () => _onArrowBackClic(context),
                           icon: const Icon(Icons.arrow_back),
                         ),
-                        const Center(
+                        Center(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 5),
+                            padding: const EdgeInsets.only(top: 5),
                             child: Text(
                               'Touiteur',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ),
                         ),

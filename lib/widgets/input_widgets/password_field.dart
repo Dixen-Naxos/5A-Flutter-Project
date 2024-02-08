@@ -27,14 +27,14 @@ class _PasswordFieldState extends State<PasswordField> {
             hintText: "Mot de passe",
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.secondary,
+                color: Theme.of(context).primaryColor,
                 width: 2.0,
               ),
               borderRadius: BorderRadius.circular(15.0),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.black,
+              borderSide: BorderSide(
+                color: Theme.of(context).focusColor,
                 width: 2.0,
               ),
               borderRadius: BorderRadius.circular(15.0),
