@@ -135,9 +135,9 @@ class _PostWidgetState extends State<PostWidget> {
                                                   image = null;
                                                 });
                                               },
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.cancel,
-                                                color: Colors.black,
+                                                color: Theme.of(context).hintColor,
                                               ),
                                             ),
                                     if (authState.user?.id == realUser.id)
@@ -150,8 +150,7 @@ class _PostWidgetState extends State<PostWidget> {
                                               icon: Icon(
                                                 Icons.save,
                                                 color: Theme.of(context)
-                                                    .colorScheme
-                                                    .shadow,
+                                                    .hintColor,
                                               ),
                                             ),
                                   ],
