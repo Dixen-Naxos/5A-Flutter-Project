@@ -15,7 +15,7 @@ class SeparatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).cardColor,
+      color: Theme.of(context).hoverColor,
       child: SizedBox(
         height: 50,
         child: Transform.rotate(
