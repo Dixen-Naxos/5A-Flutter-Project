@@ -26,8 +26,8 @@ class _PasswordFieldState extends State<PasswordField> {
           decoration: InputDecoration(
             hintText: "Mot de passe",
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.grey,
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.secondary,
                 width: 2.0,
               ),
               borderRadius: BorderRadius.circular(15.0),

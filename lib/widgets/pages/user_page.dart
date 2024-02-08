@@ -28,99 +28,106 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     final f = DateFormat('dd/MM/yyyy');
-    return Scaffold(
-      body: BlocBuilder<UserBloc, UserState>(
-        builder: (context, userState) {
-          if (userState.status == UserStatus.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (userState.status == UserStatus.success) {
-            return SafeArea(
-              child: Stack(
-                children: [
-                  IconButton(
-                    onPressed: () => _onArrowBackClic(context),
-                    icon: const Icon(Icons.arrow_back),
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(25),
-                        child: SizedBox(
-                          height: 175,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: AvatarWidget(
-                                  id: widget.userId,
-                                  size: 75,
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Wrap(
-                                    spacing: 20,
-                                    runSpacing: 20,
-                                    children: [
-                                      Text(
-                                        "Nom d'utilisateur : ${userState.user!.name}",
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                      Text(
-                                        style: const TextStyle(fontSize: 20),
-                                        "Membre depuis le : ${f.format(DateTime.fromMillisecondsSinceEpoch(userState.user!.createdAt))}",
-                                      ),
-                                    ],
+    return BlocListener<UserPostBloc, UserPostState>(
+      listener: (context, state) {
+        if(state.status == UserPostStatus.error) {
+          _showSnackBar(context);
+        }
+      },
+      child: Scaffold(
+        body: BlocBuilder<UserBloc, UserState>(
+          builder: (context, userState) {
+            if (userState.status == UserStatus.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (userState.status == UserStatus.success) {
+              return SafeArea(
+                child: Stack(
+                  children: [
+                    IconButton(
+                      onPressed: () => _onArrowBackClic(context),
+                      icon: const Icon(Icons.arrow_back),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(25),
+                          child: SizedBox(
+                            height: 175,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 15),
+                                  child: AvatarWidget(
+                                    id: widget.userId,
+                                    size: 75,
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Wrap(
+                                      spacing: 20,
+                                      runSpacing: 20,
+                                      children: [
+                                        Text(
+                                          "Nom d'utilisateur : ${userState.user!.name}",
+                                          style: const TextStyle(fontSize: 20),
+                                        ),
+                                        Text(
+                                          style: const TextStyle(fontSize: 20),
+                                          "Membre depuis le : ${f.format(DateTime.fromMillisecondsSinceEpoch(userState.user!.createdAt))}",
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const Divider(
-                        color: Colors.redAccent,
-                        thickness: 4,
-                      ),
-                      BlocBuilder<UserPostBloc, UserPostState>(
-                        builder: (context, postState) {
-                          if (postState.status == UserPostStatus.loading) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          if (postState.status == UserPostStatus.success) {
-                            if (postState.posts?.itemsReceived != 0) {
-                              return PostsListWidget(
-                                  onRefresh: _getPosts,
-                                  scrollController: _scrollController,
-                                  posts: postState.posts!.items,
-                                  onScroll: () => _onScroll(
-                                      postState.posts?.nextPage != null
-                                          ? postState.posts!.nextPage
-                                          : null),
-                                  user: userState.user);
+                        const Divider(
+                          color: Colors.redAccent,
+                          thickness: 4,
+                        ),
+                        BlocBuilder<UserPostBloc, UserPostState>(
+                          builder: (context, postState) {
+                            if (postState.status == UserPostStatus.loading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
                             }
-                            return const Center(
-                              child: Text("Aucun post"),
-                            );
-                          }
-                          return const Placeholder();
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }
-          return Container();
-        },
+                            if (postState.status == UserPostStatus.success) {
+                              if (postState.posts?.itemsReceived != 0) {
+                                return PostsListWidget(
+                                    onRefresh: _getPosts,
+                                    scrollController: _scrollController,
+                                    posts: postState.posts!.items,
+                                    onScroll: () => _onScroll(
+                                        postState.posts?.nextPage != null
+                                            ? postState.posts!.nextPage
+                                            : null),
+                                    user: userState.user);
+                              }
+                              return const Center(
+                                child: Text("Aucun post"),
+                              );
+                            }
+                            return const Placeholder();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
@@ -174,5 +181,13 @@ class _UserPageState extends State<UserPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  void _showSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Erreur lors du chargement des posts'),
+      ),
+    );
   }
 }

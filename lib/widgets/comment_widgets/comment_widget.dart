@@ -62,8 +62,11 @@ class _CommentWidgetState extends State<CommentWidget> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Text(
-                                  style: const TextStyle(
-                                      fontSize: 13, color: Colors.grey),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
                                   timeSinceComment.inDays > 0
                                       ? "${timeSinceComment.inDays}j"
                                       : timeSinceComment.inHours > 0
@@ -87,9 +90,9 @@ class _CommentWidgetState extends State<CommentWidget> {
                                                 widget.comment.content;
                                           });
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.edit,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                       )
                                     : IconButton(
@@ -98,9 +101,9 @@ class _CommentWidgetState extends State<CommentWidget> {
                                             isEditing = false;
                                           });
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.cancel,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.shadow,
                                         ),
                                       ),
                               if (authState.user?.id ==
@@ -111,9 +114,9 @@ class _CommentWidgetState extends State<CommentWidget> {
                                       )
                                     : IconButton(
                                         onPressed: _onSave,
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.save,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.shadow,
                                         ),
                                       ),
                             ],

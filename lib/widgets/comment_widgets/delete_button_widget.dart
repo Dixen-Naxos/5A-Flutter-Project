@@ -18,9 +18,9 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: _onDeleteButtonPressed,
-      icon: const Icon(
+      icon: Icon(
         Icons.delete,
-        color: Colors.redAccent,
+        color: Theme.of(context).colorScheme.primary,
       ),
     );
   }

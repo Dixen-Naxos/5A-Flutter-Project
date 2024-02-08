@@ -61,7 +61,7 @@ class _PostWidgetState extends State<PostWidget> {
       child: GestureDetector(
         onTap: () => _onPostTap(context),
         child: Container(
-          decoration: const BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
           child: Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Row(
@@ -123,9 +123,9 @@ class _PostWidgetState extends State<PostWidget> {
                                                       widget.post.content;
                                                 });
                                               },
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.edit,
-                                                color: Colors.black,
+                                                color: Theme.of(context).colorScheme.shadow,
                                               ),
                                             )
                                           : IconButton(
@@ -147,9 +147,9 @@ class _PostWidgetState extends State<PostWidget> {
                                             )
                                           : IconButton(
                                               onPressed: _onSave,
-                                              icon: const Icon(
+                                              icon: Icon(
                                                 Icons.save,
-                                                color: Colors.black,
+                                                color: Theme.of(context).colorScheme.shadow,
                                               ),
                                             ),
                                   ],

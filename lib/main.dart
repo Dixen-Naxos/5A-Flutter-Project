@@ -1,6 +1,7 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/api/comment_api/comment_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/post_api/error_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/comment_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => PostRepository(
-            postDataSource: PostApi(),
+            postDataSource: ErrorPostApi(),
           ),
         ),
         RepositoryProvider(
@@ -84,6 +85,15 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+
+            // Define the default brightness and colors.
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.red,
+              brightness: Brightness.light,
+            ),
+          ),
           routes: {
             HomePage.routeName: (context) => const HomePage(),
             SignupPage.routeName: (context) => const SignupPage(),

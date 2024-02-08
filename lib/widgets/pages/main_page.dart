@@ -30,25 +30,36 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.disconnected) {
-            Navigator.pop(context);
-            HomePage.navigateTo(context);
-            final authBloc = BlocProvider.of<AuthBloc>(context);
-            authBloc.add(
-              Init(),
-            );
-          }
-          if (state.status == AuthStatus.success) {
-            UserPage.navigateTo(context, state.user!.id);
-          }
-          if (state.status == AuthStatus.error) {
-            HomePage.navigateTo(context);
-          }
-        },
-        child: SafeArea(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state.status == AuthStatus.disconnected) {
+              Navigator.pop(context);
+              HomePage.navigateTo(context);
+              final authBloc = BlocProvider.of<AuthBloc>(context);
+              authBloc.add(
+                Init(),
+              );
+            }
+            if (state.status == AuthStatus.success) {
+              UserPage.navigateTo(context, state.user!.id);
+            }
+            if (state.status == AuthStatus.error) {
+              HomePage.navigateTo(context);
+            }
+          },
+        ),
+        BlocListener<AllPostBloc, AllPostState>(
+          listener: (context, state) {
+            if (state.status == AllPostStatus.error) {
+              _showSnackBar(context);
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
+        body: SafeArea(
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               return Stack(
@@ -63,9 +74,9 @@ class _MainPageState extends State<MainPage> {
                             IconButton(
                               onPressed: () =>
                                   _onHouseClic(context, state.user!.id),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.house,
-                                color: Colors.purpleAccent,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           Expanded(
@@ -121,9 +132,9 @@ class _MainPageState extends State<MainPage> {
             },
           ),
         ),
-      ),
-      floatingActionButton: NewPostButtonWidget(
-        onFloatingButtonPressed: _onFloatingButtonPressed,
+        floatingActionButton: NewPostButtonWidget(
+          onFloatingButtonPressed: _onFloatingButtonPressed,
+        ),
       ),
     );
   }
@@ -186,5 +197,13 @@ class _MainPageState extends State<MainPage> {
 
   void _onFloatingButtonPressed() {
     CreatePostPage.navigateTo(context);
+  }
+
+  void _showSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Erreur lors du chargement des posts'),
+      ),
+    );
   }
 }
