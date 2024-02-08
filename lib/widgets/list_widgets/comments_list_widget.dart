@@ -2,6 +2,8 @@ import 'package:cinqa_flutter_project/models/comment.dart';
 import 'package:cinqa_flutter_project/widgets/comment_widgets/comment_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../global_widgets/separator_widget.dart';
+
 
 class CommentsListWidget extends StatelessWidget {
   const CommentsListWidget({
@@ -25,7 +27,7 @@ class CommentsListWidget extends StatelessWidget {
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
+          return SeparatorWidget(id: index);
         },
       ),
     );

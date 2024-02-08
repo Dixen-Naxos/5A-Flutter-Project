@@ -1,3 +1,4 @@
+import 'package:cinqa_flutter_project/widgets/global_widgets/separator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +49,7 @@ class PostsListWidget extends StatelessWidget {
               return null;
             },
             separatorBuilder: (BuildContext context, int index) {
-              return const Divider();
+              return SeparatorWidget(id: index);
             },
           ),
         ),
