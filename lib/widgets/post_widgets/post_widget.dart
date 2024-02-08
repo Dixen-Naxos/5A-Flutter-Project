@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/auth_bloc/auth_bloc.dart';
 import '../../models/post.dart';
 import '../../models/user.dart';
+import '../global_widgets/avatar_widget.dart';
 import 'delete_button_widget.dart';
 
 class PostWidget extends StatelessWidget {
@@ -32,9 +33,8 @@ class PostWidget extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => _onProfileTap(context, realUser!.id),
-                child: const Icon(
-                  Icons.account_circle,
-                  color: Colors.black,
+                child: AvatarWidget(
+                  id: realUser!.id,
                   size: 50,
                 ),
               ),

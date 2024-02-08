@@ -1,3 +1,4 @@
+import 'package:cinqa_flutter_project/widgets/global_widgets/avatar_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/comment.dart';
@@ -20,10 +21,9 @@ class CommentWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () => _onProfileTap(context, comment.author.id),
-              child: Image.asset(
-                'assets/images/nakano${_getNakanoId(comment.author.id)}.png',
-                width: 50,
-                height: 50,
+              child: AvatarWidget(
+                id: comment.author.id,
+                size: 50,
               ),
             ),
             Column(
@@ -67,10 +67,6 @@ class CommentWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  int _getNakanoId(int id) {
-    return id % 5 + 1;
   }
 
   void _onProfileTap(BuildContext context, int userId) {

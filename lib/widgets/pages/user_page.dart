@@ -1,3 +1,4 @@
+import 'package:cinqa_flutter_project/widgets/global_widgets/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -51,11 +52,10 @@ class _UserPageState extends State<UserPage> {
                           height: 175,
                           child: Column(
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 15),
-                                child: Icon(
-                                  Icons.account_circle,
-                                  color: Colors.black,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: AvatarWidget(
+                                  id: widget.userId,
                                   size: 75,
                                 ),
                               ),

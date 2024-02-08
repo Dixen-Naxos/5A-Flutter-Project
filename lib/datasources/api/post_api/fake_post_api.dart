@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cinqa_flutter_project/models/list_posts.dart';
 
 import '../../../models/post.dart';
@@ -5,7 +7,7 @@ import '../../datasources/post_datasource.dart';
 
 class FakePostApi extends PostDataSource {
   @override
-  Future<void> createPost(String content, String? image) async {
+  Future<void> createPost(String content, File? image) async {
     try {
       return;
     } catch (e) {
