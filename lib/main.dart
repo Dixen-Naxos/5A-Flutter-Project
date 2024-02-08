@@ -1,5 +1,6 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/theme_bloc/theme_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/api/comment_api/comment_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/post_api/error_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
@@ -83,50 +84,47 @@ class MyApp extends StatelessWidget {
               postRepository: context.read<PostRepository>(),
             ),
           ),
+          BlocProvider(create: (context) => ThemeBloc()),
         ],
-        child: MaterialApp(
-          theme: ThemeData(
-            useMaterial3: true,
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: (context, themeState) {
+            return MaterialApp(
+              theme: themeState.theme,
+              routes: {
+                HomePage.routeName: (context) => const HomePage(),
+                SignupPage.routeName: (context) => const SignupPage(),
+                LoginPage.routeName: (context) => const LoginPage(),
+                MainPage.routeName: (context) => const MainPage(),
+                CreatePostPage.routeName: (context) => const CreatePostPage(),
+              },
+              onGenerateRoute: (settings) {
+                Widget content = const SizedBox();
 
-            // Define the default brightness and colors.
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.red,
-              brightness: Brightness.light,
-            ),
-          ),
-          routes: {
-            HomePage.routeName: (context) => const HomePage(),
-            SignupPage.routeName: (context) => const SignupPage(),
-            LoginPage.routeName: (context) => const LoginPage(),
-            MainPage.routeName: (context) => const MainPage(),
-            CreatePostPage.routeName: (context) => const CreatePostPage(),
-          },
-          onGenerateRoute: (settings) {
-            Widget content = const SizedBox();
-
-            switch (settings.name) {
-              case PostDetailPage.routeName:
-                final arguments = settings.arguments;
-                if (arguments is int) {
-                  content = BlocProvider(
-                    create: (context) => CommentBloc(
-                      commentRepository: context.read<CommentRepository>(),
-                    ),
-                    child: PostDetailPage(postId: arguments),
-                  );
+                switch (settings.name) {
+                  case PostDetailPage.routeName:
+                    final arguments = settings.arguments;
+                    if (arguments is int) {
+                      content = BlocProvider(
+                        create: (context) => CommentBloc(
+                          commentRepository: context.read<CommentRepository>(),
+                        ),
+                        child: PostDetailPage(postId: arguments),
+                      );
+                    }
+                    break;
+                  case UserPage.routeName:
+                    final arguments = settings.arguments;
+                    if (arguments is int) {
+                      content = UserPage(userId: arguments);
+                    }
+                    break;
                 }
-                break;
-              case UserPage.routeName:
-                final arguments = settings.arguments;
-                if (arguments is int) {
-                  content = UserPage(userId: arguments);
-                }
-                break;
-            }
 
-            return MaterialPageRoute(builder: (context) => content);
+                return MaterialPageRoute(builder: (context) => content);
+              },
+              title: "Touiteur",
+            );
           },
-          title: "Touiteur",
         ),
       ),
     );
