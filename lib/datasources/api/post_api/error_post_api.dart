@@ -36,7 +36,7 @@ class ErrorPostApi extends PostDataSource {
   }
 
   @override
-  Future<Post> patchPost(int id, String? content, String? image) async {
+  Future<Post> patchPost(int id, String? content, File? image) async {
     await Future.delayed(const Duration(seconds: 3));
     throw Exception();
   }

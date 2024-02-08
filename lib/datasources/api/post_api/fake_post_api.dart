@@ -95,7 +95,7 @@ class FakePostApi extends PostDataSource {
   }
 
   @override
-  Future<Post> patchPost(int id, String? content, String? image) async {
+  Future<Post> patchPost(int id, String? content, File? image) async {
     try {
       final Map<String, dynamic> response = {
         "id": 1,
