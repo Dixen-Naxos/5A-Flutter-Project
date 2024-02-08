@@ -28,6 +28,7 @@ class _CommentWidgetState extends State<CommentWidget> {
     final timeSinceComment = DateTime.now().difference(
         DateTime.fromMillisecondsSinceEpoch(widget.comment.createdAt));
     return Container(
+      color: Theme.of(context).cardColor,
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: Row(

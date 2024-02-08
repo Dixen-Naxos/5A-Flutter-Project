@@ -149,7 +149,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                               },
                                               icon: Icon(
                                                 Icons.edit,
-                                                color: Theme.of(context).hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             )
                                           : IconButton(
@@ -161,7 +162,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                               },
                                               icon: Icon(
                                                 Icons.cancel,
-                                                color: Theme.of(context).hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             ),
                                     if (authState.user?.id ==
@@ -174,7 +176,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                                               onPressed: _onSave,
                                               icon: Icon(
                                                 Icons.save,
-                                                color: Theme.of(context).hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             ),
                                   ],
@@ -340,6 +343,13 @@ class _PostDetailPageState extends State<PostDetailPage> {
     );
   }
 
+  Future<void> _getPost(int id) async {
+    final postBloc = BlocProvider.of<DetailPostBloc>(context);
+    postBloc.add(
+      GetPost(postId: id),
+    );
+  }
+
   Widget _getListWidgetOrEmptyWidget() {
     final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
     if (detailPostBloc.state.post!.comments.isEmpty) {
@@ -352,6 +362,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
       return CommentsListWidget(
         comments: detailPostBloc.state.post!.comments,
         scrollController: _scrollController,
+        onRefresh: () => _getPost(widget.postId),
       );
     }
   }
