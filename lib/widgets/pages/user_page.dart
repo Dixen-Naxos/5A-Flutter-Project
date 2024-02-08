@@ -95,15 +95,20 @@ class _UserPageState extends State<UserPage> {
                             );
                           }
                           if (postState.status == UserPostStatus.success) {
-                            return PostsListWidget(
-                                onRefresh: _getPosts,
-                                scrollController: _scrollController,
-                                posts: postState.posts!.items,
-                                onScroll: () => _onScroll(
-                                    postState.posts?.nextPage != null
-                                        ? postState.posts!.nextPage
-                                        : null),
-                                user: userState.user);
+                            if (postState.posts?.itemsReceived != 0) {
+                              return PostsListWidget(
+                                  onRefresh: _getPosts,
+                                  scrollController: _scrollController,
+                                  posts: postState.posts!.items,
+                                  onScroll: () => _onScroll(
+                                      postState.posts?.nextPage != null
+                                          ? postState.posts!.nextPage
+                                          : null),
+                                  user: userState.user);
+                            }
+                            return const Center(
+                              child: Text("Rien a voir ici"),
+                            );
                           }
                           return const Placeholder();
                         },

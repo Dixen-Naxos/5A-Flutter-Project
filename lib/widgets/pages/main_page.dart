@@ -96,14 +96,19 @@ class _MainPageState extends State<MainPage> {
                             );
                           }
                           if (postState.status == AllPostStatus.success) {
-                            return PostsListWidget(
-                              onRefresh: _getPosts,
-                              scrollController: _scrollController,
-                              posts: postState.posts!.items,
-                              onScroll: () => _onScroll(
-                                  postState.posts?.nextPage != null
-                                      ? postState.posts!.nextPage
-                                      : null),
+                            if (postState.posts?.itemsReceived != 0) {
+                              return PostsListWidget(
+                                onRefresh: _getPosts,
+                                scrollController: _scrollController,
+                                posts: postState.posts!.items,
+                                onScroll: () => _onScroll(
+                                    postState.posts?.nextPage != null
+                                        ? postState.posts!.nextPage
+                                        : null),
+                              );
+                            }
+                            return const Center(
+                              child: Text("Rien a voir ici"),
                             );
                           }
                           return Container();

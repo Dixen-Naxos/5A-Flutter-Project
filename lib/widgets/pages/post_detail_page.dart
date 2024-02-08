@@ -246,10 +246,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
                           ),
                           if (detailPostState.post?.comments != null &&
                               !isEditing)
-                            CommentsListWidget(
-                              comments: detailPostState.post!.comments,
-                              scrollController: _scrollController,
-                            ),
+                            _getListWidgetOrEmptyWidget(),
                           Stack(
                             children: [
                               InputField(
@@ -341,5 +338,21 @@ class _PostDetailPageState extends State<PostDetailPage> {
         post: detailPostBloc.state.post!,
       ),
     );
+  }
+
+  Widget _getListWidgetOrEmptyWidget() {
+    final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
+    if (detailPostBloc.state.post!.comments.isEmpty) {
+      return const Expanded(
+        child: Center(
+          child: Text("Rien à voir ici"),
+        ),
+      );
+    } else {
+      return CommentsListWidget(
+        comments: detailPostBloc.state.post!.comments,
+        scrollController: _scrollController,
+      );
+    }
   }
 }
