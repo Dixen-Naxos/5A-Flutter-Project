@@ -20,10 +20,10 @@ class CommentWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () => _onProfileTap(context, comment.author.id),
-              child: const Icon(
-                Icons.account_circle,
-                color: Colors.black,
-                size: 50,
+              child: Image.asset(
+                'assets/images/nakano${_getNakanoId(comment.author.id)}.png',
+                width: 50,
+                height: 50,
               ),
             ),
             Column(
@@ -67,6 +67,10 @@ class CommentWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  int _getNakanoId(int id) {
+    return id % 5 + 1;
   }
 
   void _onProfileTap(BuildContext context, int userId) {
