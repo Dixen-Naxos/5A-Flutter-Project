@@ -8,6 +8,7 @@ enum DetailPostStatus {
   deletedFromDetail,
   updated,
   error,
+  patched
 }
 
 class DetailPostState {

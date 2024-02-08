@@ -17,6 +17,7 @@ class AllPostBloc extends Bloc<AllPostEvent, AllPostState> {
     on<GetPosts>(_onGetPosts);
     on<GetMorePosts>(_onGetMorePosts);
     on<AllDeletePost>(_onDelete);
+    on<AllPatchPost>(_onPatch);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -109,6 +110,20 @@ class AllPostBloc extends Bloc<AllPostEvent, AllPostState> {
     try {
       emit(
         state.removePosts(post: event.post, status: AllPostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: AllPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onPatch(event, emit) async {
+    try {
+      emit(
+        state.patchPosts(post: event.post, status: AllPostStatus.success),
       );
     } catch (e) {
       emit(

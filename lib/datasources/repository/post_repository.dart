@@ -19,7 +19,7 @@ class PostRepository {
     return postDataSource.getPost(id);
   }
 
-  Future<Post> patchPost(int id, String? content, String? image) async {
+  Future<Post> patchPost(int id, String? content, File? image) async {
     return postDataSource.patchPost(id, content, image);
   }
 

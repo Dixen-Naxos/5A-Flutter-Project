@@ -70,4 +70,25 @@ class UserPostState {
       scrollLoading: false,
     );
   }
+
+  UserPostState patchPosts({
+    required Post post,
+    UserPostStatus? status,
+  }) {
+    if (posts != null) {
+      for (int i = 0; i < posts!.items.length; i++) {
+        if (posts!.items[i].id == post.id) {
+          post.commentCounts = posts!.items[i].commentCounts;
+          post.author = posts!.items[i].author;
+          posts!.items[i] = post;
+          break;
+        }
+      }
+    }
+    return UserPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
 }

@@ -17,6 +17,7 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     on<GetPosts>(_onGetPosts);
     on<GetMorePosts>(_onGetMorePosts);
     on<UserDeletePost>(_onDelete);
+    on<UserPatchPost>(_onPatch);
   }
 
   void _onGetUserPosts(event, emit) async {
@@ -109,6 +110,20 @@ class UserPostBloc extends Bloc<UserPostEvent, UserPostState> {
     try {
       emit(
         state.removePosts(post: event.post, status: UserPostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: UserPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onPatch(event, emit) async {
+    try {
+      emit(
+        state.patchPosts(post: event.post, status: UserPostStatus.success),
       );
     } catch (e) {
       emit(

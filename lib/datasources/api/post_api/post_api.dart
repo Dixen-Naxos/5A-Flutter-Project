@@ -66,15 +66,19 @@ class PostApi extends PostDataSource {
   }
 
   @override
-  Future<Post> patchPost(int id, String? content, String? image) async {
+  Future<Post> patchPost(int id, String? content, File? image) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       Api.dio.options.headers["Authorization"] =
           "Bearer ${prefs.get(("token"))}";
-      final response = await Api.dio.patch('/post/$id', data: {
-        "content": content,
-        "image": image,
-      });
+      final response = await Api.dio.patch(
+        '/post/$id',
+        data: FormData.fromMap({
+          "content": content,
+          "base_64_image":
+              image != null ? await MultipartFile.fromFile(image.path) : null,
+        }),
+      );
       return Post.fromJson(response.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;

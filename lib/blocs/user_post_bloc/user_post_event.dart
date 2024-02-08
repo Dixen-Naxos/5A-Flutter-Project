@@ -42,3 +42,11 @@ class UserDeletePost extends UserPostEvent {
     required this.post,
   });
 }
+
+class UserPatchPost extends UserPostEvent {
+  final Post post;
+
+  UserPatchPost({
+    required this.post,
+  });
+}

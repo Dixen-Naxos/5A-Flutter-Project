@@ -69,6 +69,11 @@ class MyApp extends StatelessWidget {
               postRepository: context.read<PostRepository>(),
             ),
           ),
+          BlocProvider(
+            create: (context) => UserPostBloc(
+              postRepository: context.read<PostRepository>(),
+            ),
+          ),
         ],
         child: MaterialApp(
           routes: {
@@ -76,7 +81,7 @@ class MyApp extends StatelessWidget {
             SignupPage.routeName: (context) => const SignupPage(),
             LoginPage.routeName: (context) => const LoginPage(),
             MainPage.routeName: (context) => const MainPage(),
-            CreatePostPage.routeName: (context) => CreatePostPage(),
+            CreatePostPage.routeName: (context) => const CreatePostPage(),
           },
           onGenerateRoute: (settings) {
             Widget content = const SizedBox();
@@ -91,12 +96,7 @@ class MyApp extends StatelessWidget {
               case UserPage.routeName:
                 final arguments = settings.arguments;
                 if (arguments is int) {
-                  content = BlocProvider(
-                    create: (context) => UserPostBloc(
-                      postRepository: context.read<PostRepository>(),
-                    ),
-                    child: UserPage(userId: arguments),
-                  );
+                  content = UserPage(userId: arguments);
                 }
                 break;
             }

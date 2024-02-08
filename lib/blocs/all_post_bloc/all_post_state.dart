@@ -70,4 +70,23 @@ class AllPostState {
       scrollLoading: false,
     );
   }
+
+  AllPostState patchPosts({
+    required Post post,
+    AllPostStatus? status,
+  }) {
+    for (int i = 0; i < posts!.items.length; i++) {
+      if (posts!.items[i].id == post.id) {
+        post.author = posts!.items[i].author;
+        post.commentCounts = posts!.items[i].commentCounts;
+        posts!.items[i] = post;
+        break;
+      }
+    }
+    return AllPostState(
+      posts: posts,
+      status: status ?? this.status,
+      scrollLoading: false,
+    );
+  }
 }

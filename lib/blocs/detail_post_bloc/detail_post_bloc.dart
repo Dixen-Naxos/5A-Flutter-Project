@@ -16,6 +16,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
     on<GetPost>(_onGetPost);
     on<Delete>(_onDelete);
     on<CreatePost>(_onPost);
+    on<PatchPost>(_onPatch);
   }
 
   void _onGetPost(event, emit) async {
@@ -27,6 +28,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
       final result = await postRepository.getPost(
         event.postId,
       );
+      //print(jsonEncode(result));
       emit(
         state.copyWith(post: result, status: DetailPostStatus.success),
       );
@@ -78,6 +80,32 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
       );
       emit(
         state.copyWith(status: DetailPostStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(status: DetailPostStatus.error),
+      );
+
+      rethrow;
+    }
+  }
+
+  void _onPatch(PatchPost event, emit) async {
+    emit(
+      state.copyWith(status: DetailPostStatus.loading),
+    );
+
+    try {
+      await postRepository.patchPost(
+        event.id,
+        event.content,
+        event.image,
+      );
+      final result2 = await postRepository.getPost(
+        event.id,
+      );
+      emit(
+        state.copyWith(post: result2, status: DetailPostStatus.patched),
       );
     } catch (e) {
       emit(

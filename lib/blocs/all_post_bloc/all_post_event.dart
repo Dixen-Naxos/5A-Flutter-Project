@@ -42,3 +42,11 @@ class AllDeletePost extends AllPostEvent {
     required this.post,
   });
 }
+
+class AllPatchPost extends AllPostEvent {
+  final Post post;
+
+  AllPatchPost({
+    required this.post,
+  });
+}

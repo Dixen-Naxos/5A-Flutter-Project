@@ -6,10 +6,10 @@ class Post {
   final int id;
   final int createdAt;
   final String content;
-  final User? author;
+  User? author;
   final int? userId;
-  final List<Comment>? comments;
-  final int? commentCounts;
+  List<Comment>? comments;
+  int? commentCounts;
   final Image? image;
 
   Post({
@@ -32,7 +32,7 @@ class Post {
       userId: json["user_id"],
       comments: json["comments"] != null
           ? Comment.listFromJson(json["comments"])
-          : null,
+          : [],
       commentCounts: json["comments_count"],
       image: json["image"] != null ? Image.fromJson(json["image"]) : null,
     );
@@ -42,5 +42,12 @@ class Post {
     return list
         .map((item) => Post.fromJson(item as Map<String, dynamic>))
         .toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'comments': comments,
+      'comments_count': commentCounts,
+    };
   }
 }

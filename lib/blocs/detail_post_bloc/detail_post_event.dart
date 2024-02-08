@@ -30,3 +30,15 @@ class CreatePost extends DetailPostEvent {
     required this.content,
   });
 }
+
+class PatchPost extends DetailPostEvent {
+  final File? image;
+  final String content;
+  final int id;
+
+  PatchPost({
+    required this.image,
+    required this.content,
+    required this.id,
+  });
+}
