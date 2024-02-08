@@ -87,7 +87,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                         },
                                         icon: Icon(
                                           Icons.edit,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(context).hintColor,
                                         ),
                                       )
                                     : IconButton(
@@ -98,7 +98,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                         },
                                         icon: Icon(
                                           Icons.cancel,
-                                          color: Theme.of(context).colorScheme.shadow,
+                                          color: Theme.of(context).hintColor,
                                         ),
                                       ),
                               if (authState.user?.id ==
@@ -111,7 +111,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                         onPressed: _onSave,
                                         icon: Icon(
                                           Icons.save,
-                                          color: Theme.of(context).colorScheme.shadow,
+                                          color: Theme.of(context).hintColor,
                                         ),
                                       ),
                             ],
