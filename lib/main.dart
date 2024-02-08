@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => PostRepository(
-            postDataSource: ErrorPostApi(),
+            postDataSource: PostApi(),
           ),
         ),
         RepositoryProvider(
