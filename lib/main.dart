@@ -2,7 +2,6 @@ import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/theme_bloc/theme_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/api/comment_api/comment_api.dart';
-import 'package:cinqa_flutter_project/datasources/api/post_api/error_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/repository/auth_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/comment_repository.dart';
 import 'package:cinqa_flutter_project/datasources/repository/user_repository.dart';

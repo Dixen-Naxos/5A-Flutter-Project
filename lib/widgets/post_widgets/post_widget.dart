@@ -67,13 +67,13 @@ class _PostWidgetState extends State<PostWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
+                /*GestureDetector(
                   onTap: () => _onProfileTap(context, realUser!.id),
                   child: AvatarWidget(
                     id: realUser!.id,
                     size: 50,
                   ),
-                ),
+                ),*/
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 5),
@@ -83,13 +83,20 @@ class _PostWidgetState extends State<PostWidget> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 5),
                           child: GestureDetector(
-                            onTap: () => _onProfileTap(context, realUser.id),
+                            onTap: () => _onProfileTap(context, realUser!.id),
                             child: BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, authState) {
                                 return Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   //mainAxisSize: MainAxisSize.min,
                                   children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8),
+                                      child: AvatarWidget(
+                                        id: realUser!.id,
+                                        size: 50,
+                                      ),
+                                    ),
                                     Text(
                                       realUser.name,
                                       style:
@@ -125,7 +132,8 @@ class _PostWidgetState extends State<PostWidget> {
                                               },
                                               icon: Icon(
                                                 Icons.edit,
-                                                color: Theme.of(context).hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             )
                                           : IconButton(
@@ -137,7 +145,8 @@ class _PostWidgetState extends State<PostWidget> {
                                               },
                                               icon: Icon(
                                                 Icons.cancel,
-                                                color: Theme.of(context).hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             ),
                                     if (authState.user?.id == realUser.id)
@@ -149,8 +158,8 @@ class _PostWidgetState extends State<PostWidget> {
                                               onPressed: _onSave,
                                               icon: Icon(
                                                 Icons.save,
-                                                color: Theme.of(context)
-                                                    .hintColor,
+                                                color:
+                                                    Theme.of(context).hintColor,
                                               ),
                                             ),
                                   ],
@@ -160,7 +169,8 @@ class _PostWidgetState extends State<PostWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.only(
+                              bottom: 10, left: 20, top: 5),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width - 75,
                             child: !isEditing
@@ -174,36 +184,41 @@ class _PostWidgetState extends State<PostWidget> {
                                   ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            if (widget.post.image != null && image == null)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxHeight: 200,
-                                    maxWidth: 200,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (widget.post.image != null && image == null)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxHeight: 200,
+                                      maxWidth: 200,
+                                    ),
+                                    child:
+                                        Image.network(widget.post.image!.url),
                                   ),
-                                  child: Image.network(widget.post.image!.url),
                                 ),
-                              ),
-                            if (image != null)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: ConstrainedBox(
-                                  constraints: const BoxConstraints(
-                                    maxHeight: 200,
-                                    maxWidth: 200,
+                              if (image != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxHeight: 200,
+                                      maxWidth: 200,
+                                    ),
+                                    child: Image.file(image!),
                                   ),
-                                  child: Image.file(image!),
                                 ),
-                              ),
-                            if (isEditing)
-                              IconButton(
-                                onPressed: _onOpenImage,
-                                icon: const Icon(Icons.link),
-                              ),
-                          ],
+                              if (isEditing)
+                                IconButton(
+                                  onPressed: _onOpenImage,
+                                  icon: const Icon(Icons.link),
+                                ),
+                            ],
+                          ),
                         ),
                         Row(
                           children: [
