@@ -91,9 +91,6 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ),
                         ),
-                        ButtonWidget(
-                            onTap: () => _toggleColorTheme(context),
-                            text: "Changer de theme"),
                         Divider(
                           color: Theme.of(context).colorScheme.onSurface,
                           thickness: 4,
@@ -195,17 +192,6 @@ class _UserPageState extends State<UserPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Erreur lors du chargement des posts'),
-      ),
-    );
-  }
-
-  void _toggleColorTheme(context) {
-    final themeBloc = BlocProvider.of<ThemeBloc>(context);
-    themeBloc.add(
-      SetTheme(
-        theme: themeBloc.state.theme == ThemeData.light()
-            ? ThemeData.dark()
-            : ThemeData.light(),
       ),
     );
   }

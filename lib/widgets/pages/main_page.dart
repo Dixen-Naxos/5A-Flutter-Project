@@ -1,4 +1,5 @@
 import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
+import 'package:cinqa_flutter_project/widgets/button_widgets/button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/button_widgets/new_post_button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/list_widgets/posts_list_widget.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../../blocs/theme_bloc/theme_bloc.dart';
 import '../../models/user.dart';
 import 'create_post_page.dart';
 
@@ -81,6 +83,11 @@ class _MainPageState extends State<MainPage> {
                             ),
                           Expanded(
                             child: Container(),
+                          ),
+                          IconButton(
+                            icon: _getThemeIcon(),
+                            onPressed: _toggleColorTheme,
+                            color: Theme.of(context).hintColor,
                           ),
                           state.status == AuthStatus.connect
                               ? IconButton(
@@ -209,5 +216,23 @@ class _MainPageState extends State<MainPage> {
         content: Text('Erreur lors du chargement des posts'),
       ),
     );
+  }
+
+  void _toggleColorTheme() {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    themeBloc.add(
+      SetTheme(
+        theme: themeBloc.state.theme == ThemeData.light()
+            ? ThemeData.dark()
+            : ThemeData.light(),
+      ),
+    );
+  }
+
+  Widget _getThemeIcon() {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    return themeBloc.state.theme == ThemeData.light()
+        ? const Icon(Icons.sunny)
+        : const Icon(Icons.nightlight_outlined);
   }
 }
