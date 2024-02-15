@@ -4,10 +4,6 @@ part of 'theme_bloc.dart';
 @immutable
 abstract class ThemeEvent {}
 
-class SetTheme extends ThemeEvent {
-  final ThemeData theme;
+class SwitchThem extends ThemeEvent {}
 
-  SetTheme({
-    required this.theme
-  });
-}
+class InitTheme extends ThemeEvent {}

@@ -216,6 +216,10 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     final authBloc = BlocProvider.of<AuthBloc>(context);
+    ThemeBloc themeBloc = BlocProvider.of<ThemeBloc>(context);
+    themeBloc.add(
+      InitTheme(),
+    );
     authBloc.add(
       Connect(),
     );
@@ -264,11 +268,7 @@ class _MainPageState extends State<MainPage> {
   void _toggleColorTheme() {
     final themeBloc = BlocProvider.of<ThemeBloc>(context);
     themeBloc.add(
-      SetTheme(
-        theme: themeBloc.state.theme == ThemeData.light()
-            ? ThemeData.dark()
-            : ThemeData.light(),
-      ),
+      SwitchThem(),
     );
   }
 
