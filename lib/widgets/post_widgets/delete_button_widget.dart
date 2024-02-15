@@ -21,7 +21,9 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: _onDeleteButtonPressed,
+      onPressed: () {
+        _onDeleteButtonPressed();
+      },
       icon: Icon(
         Icons.delete,
         color: Theme.of(context).colorScheme.error,
@@ -30,26 +32,56 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
   }
 
   _onDeleteButtonPressed() {
-    final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
-    detailPostBloc.add(
-      Delete(
-        post: widget.post,
-        isInsideDetail: widget.isInsideDetail,
-      ),
+    Widget yesButton = ElevatedButton(
+      child: Text("Oui"),
+      onPressed: () {
+        final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
+        detailPostBloc.add(
+          Delete(
+            post: widget.post,
+            isInsideDetail: widget.isInsideDetail,
+          ),
+        );
+
+        final allPostBloc = BlocProvider.of<AllPostBloc>(context);
+        allPostBloc.add(
+          AllDeletePost(
+            post: widget.post,
+          ),
+        );
+
+        final userPostBloc = BlocProvider.of<UserPostBloc>(context);
+        userPostBloc.add(
+          UserDeletePost(
+            post: widget.post,
+          ),
+        );
+
+        Navigator.of(context).pop();
+      },
     );
 
-    final allPostBloc = BlocProvider.of<AllPostBloc>(context);
-    allPostBloc.add(
-      AllDeletePost(
-        post: widget.post,
-      ),
+    Widget noButton = ElevatedButton(
+      child: const Text("Non"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
     );
 
-    final userPostBloc = BlocProvider.of<UserPostBloc>(context);
-    userPostBloc.add(
-      UserDeletePost(
-        post: widget.post,
-      ),
+    AlertDialog alert = AlertDialog(
+      title: Text("Suppression"),
+      content: const Text("Voulez-vous vriament supprimer ce post ?"),
+      actions: [
+        yesButton,
+        noButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

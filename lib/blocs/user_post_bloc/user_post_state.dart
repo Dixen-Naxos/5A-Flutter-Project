@@ -63,7 +63,9 @@ class UserPostState {
     required Post post,
     UserPostStatus? status,
   }) {
-    posts!.items.remove(post);
+    if (posts != null) {
+      posts!.items.remove(post);
+    }
     return UserPostState(
       posts: posts,
       status: status ?? this.status,
