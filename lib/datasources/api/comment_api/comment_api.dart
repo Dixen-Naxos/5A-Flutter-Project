@@ -15,6 +15,7 @@ class CommentApi extends CommentDataSource {
         "post_id": postId,
         "content": content,
       });
+      print(result.data);
       return Comment.fromJson(result.data as Map<String, dynamic>);
     } catch (e) {
       rethrow;

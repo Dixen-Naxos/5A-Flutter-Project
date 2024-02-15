@@ -31,9 +31,47 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state.status == AuthStatus.connect) {
+            final authBloc = BlocProvider.of<AuthBloc>(context);
+            if (state.status == AuthStatus.connected) {
+              print("LOgin");
               Navigator.pop(context);
               MainPage.navigateTo(context);
+            }
+            if (state.status == AuthStatus.error) {
+              print(state.error!.response!.statusCode);
+              print(state.error!.response!.data);
+              switch (state.error!.response!.statusCode) {
+                case 403:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Je pense que ton email ou ton mot de passe est incorrect, reessaye victime (ne nous tapez pas svp c'est l'idée d'Arnaud Jourdain)",
+                      ),
+                    ),
+                  );
+                  break;
+                case 400:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'Fais un effort et met un email valide pitié',
+                      ),
+                    ),
+                  );
+                  break;
+                default:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Quelque chose c'est mal passé",
+                      ),
+                    ),
+                  );
+                  break;
+              }
+              authBloc.add(
+                Init(),
+              );
             }
           },
           child: BlocBuilder<AuthBloc, AuthState>(
@@ -43,19 +81,17 @@ class _LoginPageState extends State<LoginPage> {
                   child: CircularProgressIndicator(),
                 );
               }
-              if (state.status == AuthStatus.error) {
-                return const Center(
-                  child: Text(
-                    "T'es nul ahah",
-                    style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
-                  ),
-                );
-              }
               if (state.status == AuthStatus.initial) {
                 return Column(
                   children: [
                     Stack(
                       children: [
+                        /*if (state.status == AuthStatus.error &&
+                            state.error!.response!.statusCode == 403)
+                          const AlertDialog(
+                            content: Text(
+                                "Le nom d'utilisateur ou le mot de passe est incorrect"),
+                          ),*/
                         IconButton(
                           onPressed: () => _onArrowBackClic(context),
                           icon: const Icon(Icons.arrow_back),
@@ -136,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onArrowBackClic(BuildContext context) {
+    print("Login");
     HomePage.navigateTo(context);
   }
 }

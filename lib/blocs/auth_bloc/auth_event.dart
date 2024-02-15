@@ -32,3 +32,5 @@ class Disconnect extends AuthEvent {}
 class Connect extends AuthEvent {}
 
 class Init extends AuthEvent {}
+
+class Access extends AuthEvent {}

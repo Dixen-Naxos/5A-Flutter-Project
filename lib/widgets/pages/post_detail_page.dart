@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cinqa_flutter_project/widgets/list_widgets/comments_list_widget.dart';
+import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/post_widgets/delete_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
         },
         child: BlocListener<CommentBloc, CommentState>(
           listener: (context, commentState) {
+            final authBloc = BlocProvider.of<AuthBloc>(context);
             final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
             final userPostBloc = BlocProvider.of<UserPostBloc>(context);
             final allPostBloc = BlocProvider.of<AllPostBloc>(context);
@@ -94,6 +96,25 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   post: detailPostBloc.state.post!,
                 ),
               );
+            }
+            if (commentState.status == CommentStatus.error) {
+              switch (commentState.error!.response!.statusCode) {
+                case 401:
+                  HomePage.navigateTo(context);
+                  authBloc.add(
+                    Init(),
+                  );
+                  break;
+                default:
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Quelque chose c'est mal passé",
+                      ),
+                    ),
+                  );
+                  break;
+              }
             }
           },
           child: SafeArea(
@@ -335,12 +356,22 @@ class _PostDetailPageState extends State<PostDetailPage> {
     final commentBloc = BlocProvider.of<CommentBloc>(context);
     final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
 
-    commentBloc.add(
-      PostComment(
-        content: commentController.text,
-        post: detailPostBloc.state.post!,
-      ),
-    );
+    if (commentController.text.trim().isNotEmpty) {
+      commentBloc.add(
+        PostComment(
+          content: commentController.text.trim(),
+          post: detailPostBloc.state.post!,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Impossible d'avoir un commentaire vide",
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> _getPost(int id) async {

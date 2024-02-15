@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import '../../datasources/repository/post_repository.dart';
@@ -37,11 +38,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.copyWith(post: result, status: DetailPostStatus.success),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -64,11 +64,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         );
       }
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -86,11 +85,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.copyWith(status: DetailPostStatus.success),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -112,11 +110,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.copyWith(post: result2, status: DetailPostStatus.patched),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -126,11 +123,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.addComment(post: event.post, comment: event.comment),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -140,11 +136,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.patchComment(post: event.post, comment: event.comment),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 
@@ -154,11 +149,10 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         state.deleteComment(post: event.post, comment: event.comment),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: DetailPostStatus.error),
+        state.copyWith(status: DetailPostStatus.error, error: dioException),
       );
-
-      rethrow;
     }
   }
 }

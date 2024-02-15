@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-             Padding(
+            Padding(
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(

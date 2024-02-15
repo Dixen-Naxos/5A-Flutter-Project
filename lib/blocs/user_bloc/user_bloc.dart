@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import '../../datasources/repository/user_repository.dart';
@@ -25,11 +26,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         state.copyWith(user: result, status: UserStatus.success),
       );
     } catch (e) {
-      emit(
-        state.copyWith(status: UserStatus.error),
-      );
+      final dioException = e as DioException;
 
-      rethrow;
+      emit(
+        state.copyWith(status: UserStatus.error, error: dioException),
+      );
     }
   }
 }

@@ -147,9 +147,19 @@ class _CreatePostPageState extends State<CreatePostPage> {
   void _onPoster() {
     final detailPostBloc = BlocProvider.of<DetailPostBloc>(context);
 
-    detailPostBloc.add(CreatePost(
-      image: _image,
-      content: postController.text,
-    ));
+    if (postController.text.trim().isNotEmpty) {
+      detailPostBloc.add(CreatePost(
+        image: _image,
+        content: postController.text.trim(),
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Impossible d'avoir un post vide",
+          ),
+        ),
+      );
+    }
   }
 }

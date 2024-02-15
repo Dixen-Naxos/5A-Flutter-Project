@@ -14,19 +14,20 @@ enum DetailPostStatus {
 class DetailPostState {
   final Post? post;
   final DetailPostStatus status;
+  final DioException? error;
 
   DetailPostState({
     this.post,
     this.status = DetailPostStatus.initial,
+    this.error,
   });
 
-  DetailPostState copyWith({
-    Post? post,
-    DetailPostStatus? status,
-  }) {
+  DetailPostState copyWith(
+      {Post? post, DetailPostStatus? status, DioException? error}) {
     return DetailPostState(
       post: post ?? this.post,
       status: status ?? this.status,
+      error: error ?? this.error,
     );
   }
 

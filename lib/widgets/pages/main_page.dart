@@ -1,6 +1,7 @@
 import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
 import 'package:cinqa_flutter_project/widgets/button_widgets/new_post_button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/list_widgets/posts_list_widget.dart';
+import 'package:cinqa_flutter_project/widgets/pages/create_post_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/home_page.dart';
 import 'package:cinqa_flutter_project/widgets/pages/user_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth_bloc/auth_bloc.dart';
 import '../../models/user.dart';
-import 'create_post_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -34,19 +34,30 @@ class _MainPageState extends State<MainPage> {
       listeners: [
         BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
+            final authBloc = BlocProvider.of<AuthBloc>(context);
             if (state.status == AuthStatus.disconnected) {
+              print("MainPage");
               Navigator.pop(context);
               HomePage.navigateTo(context);
-              final authBloc = BlocProvider.of<AuthBloc>(context);
               authBloc.add(
                 Init(),
               );
             }
             if (state.status == AuthStatus.success) {
-              UserPage.navigateTo(context, state.user!.id);
+              CreatePostPage.navigateTo(context);
+              authBloc.add(
+                Access(),
+              );
             }
             if (state.status == AuthStatus.error) {
-              HomePage.navigateTo(context);
+              switch (state.error!.response!.statusCode) {
+                case 401:
+                  HomePage.navigateTo(context);
+                  authBloc.add(
+                    Init(),
+                  );
+                  break;
+              }
             }
           },
         ),
@@ -70,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (state.status == AuthStatus.connect)
+                          if (state.status == AuthStatus.connected)
                             IconButton(
                               onPressed: () =>
                                   _onHouseClic(context, state.user!.id),
@@ -82,7 +93,7 @@ class _MainPageState extends State<MainPage> {
                           Expanded(
                             child: Container(),
                           ),
-                          state.status == AuthStatus.connect
+                          state.status == AuthStatus.connected
                               ? IconButton(
                                   onPressed: () => _onDisconnectClic(context),
                                   icon: Icon(
@@ -155,6 +166,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onConnectClic(BuildContext context) {
+    print("MainPAge2");
     HomePage.navigateTo(context);
   }
 
@@ -199,8 +211,11 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  void _onFloatingButtonPressed() {
-    CreatePostPage.navigateTo(context);
+  void _onFloatingButtonPressed() async {
+    final authBloc = BlocProvider.of<AuthBloc>(context);
+    authBloc.add(
+      Me(),
+    );
   }
 
   void _showSnackBar(BuildContext context) {

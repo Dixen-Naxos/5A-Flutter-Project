@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cinqa_flutter_project/datasources/repository/comment_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import '../../models/comment.dart';
@@ -31,11 +32,13 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
         state.copyWith(comment: result, status: CommentStatus.created),
       );
     } catch (e) {
+      final dioException = e as DioException;
       emit(
-        state.copyWith(status: CommentStatus.error),
+        state.copyWith(
+          status: CommentStatus.error,
+          error: dioException,
+        ),
       );
-
-      rethrow;
     }
   }
 
@@ -57,8 +60,6 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       emit(
         state.copyWith(status: CommentStatus.error),
       );
-
-      rethrow;
     }
   }
 
@@ -78,8 +79,6 @@ class CommentBloc extends Bloc<CommentEvent, CommentState> {
       emit(
         state.copyWith(status: CommentStatus.error),
       );
-
-      rethrow;
     }
   }
 }
