@@ -1,6 +1,7 @@
 import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/theme_bloc/theme_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/error_auth_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/fake_auth_api.dart';
@@ -64,6 +65,9 @@ Widget _setUpSignupPage(
           create: (context) => AllPostBloc(
             postRepository: context.read<PostRepository>(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => ThemeBloc(),
         ),
       ],
       child: const MaterialApp(

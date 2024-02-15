@@ -1,9 +1,11 @@
 import 'package:cinqa_flutter_project/blocs/auth_bloc/auth_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/detail_post_bloc/detail_post_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/all_post_bloc/all_post_bloc.dart';
+import 'package:cinqa_flutter_project/blocs/theme_bloc/theme_bloc.dart';
 import 'package:cinqa_flutter_project/blocs/user_bloc/user_bloc.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/error_auth_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/auth_api/fake_auth_api.dart';
+import 'package:cinqa_flutter_project/datasources/api/post_api/empty_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/post_api/fake_post_api.dart';
 import 'package:cinqa_flutter_project/datasources/api/user_api/fake_user_api.dart';
 import 'package:cinqa_flutter_project/datasources/datasources/auth_datasource.dart';
@@ -62,6 +64,9 @@ Widget _setUpMainPage(
           create: (context) => AllPostBloc(
             postRepository: context.read<PostRepository>(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => ThemeBloc(),
         ),
       ],
       child: const MaterialApp(
@@ -150,6 +155,28 @@ void main() {
       expect(find.byType(PostWidget), findsAtLeastNWidgets(1));
     });
 
+    testWidgets('$MainPage shouldnt display any post',
+            (WidgetTester tester) async {
+          await tester.pumpWidget(_setUpMainPage(
+            EmptyPostApi(),
+            FakeUserApi(),
+            FakeAuthApi(),
+          ));
+          await tester.pump(const Duration(seconds: 7));
+          expect(find.byType(PostWidget), findsNothing);
+        });
+
+    testWidgets('$MainPage should display "Aucun post"',
+            (WidgetTester tester) async {
+          await tester.pumpWidget(_setUpMainPage(
+            EmptyPostApi(),
+            FakeUserApi(),
+            FakeAuthApi(),
+          ));
+          await tester.pump(const Duration(seconds: 7));
+          expect(find.text("Aucun post"), findsOneWidget);
+        });
+
     testWidgets('$MainPage should display trash icon when author is auth',
         (WidgetTester tester) async {
       await tester.pumpWidget(_setUpMainPage(
@@ -174,26 +201,26 @@ void main() {
     });
 
     testWidgets('$MainPage should display edit icon when author is auth',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpMainPage(
-            FakePostApi(),
-            FakeUserApi(),
-            FakeAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 7));
-          expect(find.byIcon(Icons.edit), findsAtLeastNWidgets(1));
-        });
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        FakeAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 7));
+      expect(find.byIcon(Icons.edit), findsAtLeastNWidgets(1));
+    });
 
     testWidgets(
         '$MainPage should not display edit icon when author is not auth',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(_setUpMainPage(
-            FakePostApi(),
-            FakeUserApi(),
-            ErrorAuthApi(),
-          ));
-          await tester.pump(const Duration(seconds: 6));
-          expect(find.byIcon(Icons.edit), findsNothing);
-        });
+        (WidgetTester tester) async {
+      await tester.pumpWidget(_setUpMainPage(
+        FakePostApi(),
+        FakeUserApi(),
+        ErrorAuthApi(),
+      ));
+      await tester.pump(const Duration(seconds: 6));
+      expect(find.byIcon(Icons.edit), findsNothing);
+    });
   });
 }
