@@ -1,10 +1,8 @@
-import 'package:cinqa_flutter_project/widgets/button_widgets/button_widget.dart';
 import 'package:cinqa_flutter_project/widgets/global_widgets/avatar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../blocs/theme_bloc/theme_bloc.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../blocs/user_post_bloc/user_post_bloc.dart';
 import '../list_widgets/posts_list_widget.dart';
@@ -91,9 +89,6 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ),
                         ),
-                        ButtonWidget(
-                            onTap: () => _toggleColorTheme(context),
-                            text: "Changer de theme"),
                         Divider(
                           color: Theme.of(context).colorScheme.onSurface,
                           thickness: 4,
@@ -195,17 +190,6 @@ class _UserPageState extends State<UserPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Erreur lors du chargement des posts'),
-      ),
-    );
-  }
-
-  void _toggleColorTheme(context) {
-    final themeBloc = BlocProvider.of<ThemeBloc>(context);
-    themeBloc.add(
-      SetTheme(
-        theme: themeBloc.state.theme == ThemeData.light()
-            ? ThemeData.dark()
-            : ThemeData.light(),
       ),
     );
   }

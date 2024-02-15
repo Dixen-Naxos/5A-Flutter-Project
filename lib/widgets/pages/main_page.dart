@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/auth_bloc/auth_bloc.dart';
+import '../../blocs/theme_bloc/theme_bloc.dart';
 import '../../models/user.dart';
 
 class MainPage extends StatefulWidget {
@@ -92,6 +93,11 @@ class _MainPageState extends State<MainPage> {
                             ),
                           Expanded(
                             child: Container(),
+                          ),
+                          IconButton(
+                            icon: _getThemeIcon(),
+                            onPressed: _toggleColorTheme,
+                            color: Theme.of(context).hintColor,
                           ),
                           state.status == AuthStatus.connected
                               ? IconButton(
@@ -224,5 +230,23 @@ class _MainPageState extends State<MainPage> {
         content: Text('Erreur lors du chargement des posts'),
       ),
     );
+  }
+
+  void _toggleColorTheme() {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    themeBloc.add(
+      SetTheme(
+        theme: themeBloc.state.theme == ThemeData.light()
+            ? ThemeData.dark()
+            : ThemeData.light(),
+      ),
+    );
+  }
+
+  Widget _getThemeIcon() {
+    final themeBloc = BlocProvider.of<ThemeBloc>(context);
+    return themeBloc.state.theme == ThemeData.light()
+        ? const Icon(Icons.sunny)
+        : const Icon(Icons.nightlight_outlined);
   }
 }
