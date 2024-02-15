@@ -26,11 +26,40 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
   }
 
   _onDeleteButtonPressed() {
-    final detailPostBloc = BlocProvider.of<CommentBloc>(context);
-    detailPostBloc.add(
-      DeleteComment(
-        comment: widget.comment,
-      ),
+    Widget yesButton = ElevatedButton(
+      child: Text("Oui"),
+      onPressed: () {
+        final detailPostBloc = BlocProvider.of<CommentBloc>(context);
+        detailPostBloc.add(
+          DeleteComment(
+            comment: widget.comment,
+          ),
+        );
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget noButton = ElevatedButton(
+      child: const Text("Non"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Suppression"),
+      content: const Text("Voulez-vous vraiment supprimer ce commentaire ?"),
+      actions: [
+        yesButton,
+        noButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

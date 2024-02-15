@@ -70,7 +70,7 @@ class _DeleteButtonWidgetState extends State<DeleteButtonWidget> {
 
     AlertDialog alert = AlertDialog(
       title: Text("Suppression"),
-      content: const Text("Voulez-vous vriament supprimer ce post ?"),
+      content: const Text("Voulez-vous vraiment supprimer ce post ?"),
       actions: [
         yesButton,
         noButton,

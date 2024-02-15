@@ -165,9 +165,38 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _onDisconnectClic(BuildContext context) {
-    final authBloc = BlocProvider.of<AuthBloc>(context);
-    authBloc.add(
-      Disconnect(),
+    Widget yesButton = ElevatedButton(
+      child: Text("Oui"),
+      onPressed: () {
+        final authBloc = BlocProvider.of<AuthBloc>(context);
+        authBloc.add(
+          Disconnect(),
+        );
+        Navigator.of(context).pop();
+      },
+    );
+
+    Widget noButton = ElevatedButton(
+      child: const Text("Non"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Deconnexion"),
+      content: const Text("Voulez-vous vraiment vous deconnecter ?"),
+      actions: [
+        yesButton,
+        noButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
