@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onArrowBackClic(BuildContext context) {
-    print("Login");
+    Navigator.pop(context);
     HomePage.navigateTo(context);
   }
 }

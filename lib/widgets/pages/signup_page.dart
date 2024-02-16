@@ -55,7 +55,7 @@ class _SignupPageState extends State<SignupPage> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text(
-                        'Fais un effort et met un email et un mot de passe valide pitié',
+                        'Fais un effort il y a un probleme avec un des champs',
                       ),
                     ),
                   );
@@ -167,7 +167,7 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   void _onArrowBackClic(BuildContext context) {
-    print("Signup 2");
+    Navigator.pop(context);
     HomePage.navigateTo(context);
   }
 

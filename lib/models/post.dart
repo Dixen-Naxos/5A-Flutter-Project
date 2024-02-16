@@ -27,7 +27,7 @@ class Post {
     return Post(
       id: json["id"],
       createdAt: json["created_at"],
-      content: json["content"],
+      content: json["content"] ?? "",
       author: json["author"] != null ? User.fromJson(json["author"]) : null,
       userId: json["user_id"],
       comments: json["comments"] != null

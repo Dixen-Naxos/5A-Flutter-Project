@@ -15,7 +15,7 @@ class User {
     return User(
       id: json["id"],
       createdAt: json["created_at"],
-      name: json["name"],
+      name: json["name"] ?? "",
       email: json["email"],
     );
   }

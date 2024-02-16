@@ -17,7 +17,7 @@ class Comment {
     return Comment(
       id: json["id"],
       createdAt: json["created_at"],
-      content: json["content"],
+      content: json["content"] ?? "Nixid",
       author: json["author"] != null ? User.fromJson(json["author"]) : null,
     );
   }

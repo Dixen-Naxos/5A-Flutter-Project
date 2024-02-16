@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<ThemeBloc, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: themeState.theme,
               routes: {
                 HomePage.routeName: (context) => const HomePage(),
